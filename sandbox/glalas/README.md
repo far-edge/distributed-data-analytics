@@ -13,22 +13,22 @@ and the Logging properties for Apache Kafka under :
 ```
 /src/main/resources/logback.xml
 ```
-#####Default Properties:
+##### Default Properties:
 * server.port : 8085  
 * spring.data.mongodb.host=localhost
 * spring.data.mongodb.port=27017
 * Apache Kafka properties like "BOOTSTRAP_SERVERS" are currently hardcoded inside ```.../farEdgeGateway/kafka/KafkaJavaProducer.java```
 and ```.../farEdgeGateway/kafka/KafkaJavaConsumer.java``` classes. Currently we are using the default Kafka properties, e.g. for hostname & port:```localhost:9092```.
 This will change on future versions. The Apache Kafka properties will be moved to application.properties file.
-##Install & Run the application
-####Running from an IDE
+## Install & Run the application
+#### Running from an IDE
 1. Clone the project from : https://github.com/far-edge/EdgeAnalyticsEngine.git
 2. Import the project to the IDE of your choice as Maven Project. You can also import it as Spring Boot project (Eclipse, IDEA)
 and select FarEdgeGatewayApplication.java under:
 ```
 /src/main/java/gr/ait/farEdge/farEdgeGateway/FarEdgeGatewayApplication.java
 ```
-#####Running using Spring Boot maven plugin :
+##### Running using Spring Boot maven plugin :
 ```
 $ mvn spring-boot:run
 ```
@@ -43,7 +43,7 @@ $ java -jar target/farEdgeGateway-0.0.1-SNAPSHOT.jar
 * [Spring Boot Official Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-script-customization
 ) - Official Documentation to customize a startup script
 
-####Checking Status & Health
+#### Checking Status & Health
 - Status end-point :
 `http://localhost:8085/application/status` and this should respond with : `{"status":"UP"}`
 - Health end-point : 
