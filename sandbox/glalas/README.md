@@ -4,7 +4,7 @@
 1. MongoDB community edition v.3.4.5 installed and configured
 2. Apache Kafka v.0.11.0.1 installed and configured
 3. Project SDK : Java 1.8
-###Application Properties:
+### Application Properties:
 You can find and modify the application properties under : 
 ```
 /src/main/resources/application.properties
