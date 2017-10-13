@@ -1,7 +1,61 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
+# Compiled source #
+###################
+*.class
 
-### STS ###
+
+# Eclipse #
+###########
+.project
+**/.project
+.classpath
+**/.classpath
+.settings
+**/.settings
+org.eclipse.core.resources.prefs
+org.eclipse.m2e.core.prefs
+.factorypath
+.pmd
+
+
+# Netbeans #
+############
+**/jboss-web.xml
+**/nb-configuration.xml
+*~
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+
+
+# IntelliJ Files #
+################
+*.iml
+/.idea
+.idea
+*/.idea
+*.ipr
+*.iws
+
+
+
+
+
+# Gradle #
+##########
+build/
+*/build
+*/.gradle
+.gradle
+
+
+
+
+# STS #
+#######
 .apt_generated
 .classpath
 .factorypath
@@ -9,16 +63,57 @@ target/
 .settings
 .springBeans
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+# Maven Generated #
+###################
+pom.xml.versionsBackup
+
+
+
+# Mac Generated #
+#################
+.DS_Store
+
+
+
+# Binary Folders #
+#################
+bin
+*/bin/
+target/
+*/target/
+
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+
+# Logs and databases #
+######################
+*.log
+logs/
+*/logs/
+#*.sql
+#*.sqlite
+
+
+# OS generated files #
+######################
+rebel.xml
+
+# Other files #
+###############
+.svn
+*/svn/
+
+
