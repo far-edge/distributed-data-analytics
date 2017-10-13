@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!-- Author: Nikos Kefalakis (nkef@ait.edu.gr) -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+  <!-- =========================================================== -->
+  <!-- Basics -->
+  <!-- =========================================================== -->
+
+  
+  
+  
+    <modelVersion>4.0.0</modelVersion>
+  <!-- the <groupId> is taken from the parent pom -->
+  <groupId>eu.far-edge</groupId>
+  <artifactId>eg.analytics.orchestrator</artifactId>
+  <version>0.0.1</version>
+  <packaging>war</packaging>
+  <name>FAR-EDGE Analytics Orchestrator</name>
+  <description>FAR-EDGE Analytics Orchestrator</description>
+  <url></url>
+  
+  
+  
+  
+  <!--
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License, version 2.1</name>
+      <distribution>repo</distribution>
+      <url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
+    </license>
+  </licenses>
+  -->
+
+
+  <!-- =========================================================== -->
+  <!-- Parent -->
+  <!-- =========================================================== -->
+
+
+<!--   <parent> -->
+
+<!--   </parent> -->
+  
+  
+  <!-- =========================================================== -->
+  <!-- Properties -->
+  <!-- =========================================================== -->
+  
+    <properties>
+    
+ 
+ 
+        <!-- Explicitly declaring the source encoding eliminates the following 
+            message: -->
+        <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
+            resources, i.e. build is platform dependent! -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- JBoss dependency versions -->
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+
+        <!-- Define the version of the JBoss BOMs we want to import to specify 
+            tested stacks. -->
+        <version.jboss.bom>8.2.1.Final</version.jboss.bom>
+
+        <!-- other plugin versions -->
+        <version.compiler.plugin>3.1</version.compiler.plugin>
+        <version.surefire.plugin>2.16</version.surefire.plugin>
+        <version.war.plugin>2.5</version.war.plugin>
+
+        <!-- maven-compiler-plugin -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+
+
+  <!-- =========================================================== -->
+  <!-- Dependencies -->
+  <!-- =========================================================== -->
+    <dependencyManagement>
+        <dependencies>
+   
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+
+
+    <!-- ======== JBoss RestEasy JAX-RS with JAXB support Dependencies ========== -->
+    
+      <!-- core library -->
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-jaxrs</artifactId>
+         <version>3.0.19.Final</version>
+      </dependency>
+      <!-- JAXB support -->
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-client</artifactId>
+         <version>3.0.19.Final</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-jaxb-provider</artifactId>
+         <version>3.0.19.Final</version>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>jaxrs-api</artifactId>
+         <version>3.0.12.Final</version>
+      </dependency>
+
+
+
+    <!--======== FAR-EDGE dependencies ============-->
+
+      <dependency>
+         <groupId>eu.far-edge</groupId>
+         <artifactId>eg.analytics.commons</artifactId>
+         <version>0.0.1</version>
+
+      </dependency>
+
+
+    <!-- ======== jUnit Dependencies ========== -->
+
+    <!-- Needed for running tests  -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+
+
+    <!-- ======== LogBack Dependencies ========== -->
+
+   <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+
+   </dependency>
+
+
+
+    <!-- ========javamelody (monitoring) dependency ==========-->
+    
+    <dependency>
+      <groupId>net.bull.javamelody</groupId>
+      <artifactId>javamelody-core</artifactId>
+      <version>1.45.0</version>
+    </dependency>
+
+
+
+
+    </dependencies>
+
+
+
+  <!-- =========================================================== -->
+  <!-- Build -->
+  <!-- =========================================================== -->
+
+    <build>
+        <!-- Maven will append the version to the finalName (which is the name 
+            given to the generated war, and hence the context root) -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+        <!-- Compiler plugin enforces Java 1.8 compatibility and activates annotation
+         processors -->
+         <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${version.compiler.plugin}</version>
+            <configuration>
+               <source>${maven.compiler.source}</source>
+               <target>${maven.compiler.target}</target>
+            </configuration>
+         </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.war.plugin}</version>
+                <configuration>
+                    <!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- The WildFly plugin deploys your war to a local WildFly container -->
+            <!-- To use, run: mvn package wildfly:deploy -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+
+  <!-- =========================================================== -->
+  <!-- Profiles -->
+  <!-- =========================================================== -->
+
+
+    <profiles>
+        <profile>
+            <!-- The default profile skips all tests, though you can tune it to run 
+                just unit tests based on a custom pattern -->
+            <!-- Seperate profiles are provided for running all tests, including Arquillian 
+                tests that execute in the specified container -->
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+
+        <profile>
+            <!-- When built in OpenShift the 'openshift' profile will be used when 
+                invoking mvn. -->
+            <!-- Use this profile for any OpenShift specific customization your app 
+                will need. -->
+            <!-- By default that is to put the resulting archive into the 'deployments' 
+                folder. -->
+            <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+            <id>openshift</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${version.war.plugin}</version>
+                        <configuration>
+                            <outputDirectory>deployments</outputDirectory>
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+    
+  <!-- =========================================================== -->
+  <!-- Repositories -->
+  <!-- =========================================================== -->
+
+  <repositories>
+  </repositories>
+
+  <pluginRepositories>
+  </pluginRepositories>    
+    
+</project>
