@@ -1,4 +1,4 @@
-FIESTA Commons Library
+FAR-EDGE Edge Analytics Commons Library
 =======================
 
 What is it?
