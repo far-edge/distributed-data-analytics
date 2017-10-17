@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EaSpec xmlns:eap="http://www.faredge.eu/ea/processor"
+ xmlns="http://www.faredge.eu/ea/orchestrator"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.faredge.eu/ea/orchestrator file:/C:/FAR-EDGE/EA/models/EaSpec.xsd" id="42e96c19-711f-11e7-b02b-fa163e11a752">
+    <eap:EaProcessorSpec id="processor1-ead7b951-91db-11e7">
+        <eap:processorType>fantasticProcessor</eap:processorType>
+        <eap:processorLocation>C:/FAR-EDGE/EA/processors/fantasticProcessor.jar</eap:processorLocation>
+        <eap:processorName>fantasticProcessor765</eap:processorName>
+        <eap:ProcessorConfigs>
+            <eap:inputStream name="device1-b02b-fa163e11a752">
+                <eap:attribute>
+                    <eap:name>attribute0</eap:name>
+                    <eap:value>value0</eap:value>
+                </eap:attribute>
+                <eap:attribute>
+                    <eap:name>attribute1</eap:name>
+                    <eap:value><![CDATA[ CouldBeSomeWeirdValueWithXmlEscapeCharacters1 ]]></eap:value>
+                </eap:attribute>
+            </eap:inputStream>
+            <eap:inputStream name="device2-b02b-fa163e11a752">
+                <eap:attribute>
+                    <eap:name>attribute2</eap:name>
+                    <eap:value>value2</eap:value>
+                </eap:attribute>
+                <eap:attribute>
+                    <eap:name>attribute3</eap:name>
+                    <eap:value>value3</eap:value>
+                </eap:attribute>
+            </eap:inputStream>
+        </eap:ProcessorConfigs>
+    </eap:EaProcessorSpec>
+    <eap:EaProcessorSpec id="processor2-persist-b02b-fa163e11a752">
+        <eap:processorType>processorTypePersist</eap:processorType>
+        <eap:processorLocation>C:/FAR-EDGE/EA/processors/processorTypePersist.jar</eap:processorLocation>
+        <eap:processorName>processorNamePersistance98</eap:processorName>
+        <eap:ProcessorConfigs>
+            <eap:inputStream name="processor1-ead7b951-91db-11e7">
+                <eap:attribute>
+                    <eap:name>attribute4</eap:name>
+                    <eap:value><![CDATA[ CouldBeSomeWeirdValueWithXmlEscapeCharacters4 ]]></eap:value>
+                </eap:attribute>
+                <eap:attribute>
+                    <eap:name>attribute5</eap:name>
+                    <eap:value>value5</eap:value>
+                </eap:attribute>
+            </eap:inputStream>
+        </eap:ProcessorConfigs>
+    </eap:EaProcessorSpec>
+</EaSpec>
+
