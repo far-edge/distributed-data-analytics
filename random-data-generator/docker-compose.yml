@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  random-data-generator:
+    container_name: "random-data-generator"
+    build: .
+    volumes:
+      - ./:/faredge/random-data-generator
+    env_file: .env
+    links:
+      - mqtt-broker
+    command: /faredge/random-data-generator/node_modules/.bin/nodemon --inspect --exec 'node' index.js
+
+  mqtt-broker:
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto_config:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+      
+volumes:
+  mosquitto_config:
+  mosquitto_data:
+  mosquitto_log:
+  
