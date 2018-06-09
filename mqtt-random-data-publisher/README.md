@@ -31,7 +31,7 @@ Edit `.env`.
 
 #### CREATE THE VIRTUAL ENVIRONMENT
 
-    cd distributed-data-analytics/random-data-generator
+    cd distributed-data-analytics/mqtt-random-data-publisher
     nodeenv -n 10.1.0 --prebuilt env
 
 #### ACTIVATE THE VIRTUAL ENVIRONMENT
