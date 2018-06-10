@@ -27,7 +27,7 @@ const schema = Joi.object({
   ]).required(),
   MAX_VALUE: Joi.number().required(),
   MIN_VALUE: Joi.number().required(),
-  MQTT_URL: Joi.string().required(),
+  MQTT_BROKER_URL: Joi.string().required(),
   MQTT_TOPIC: Joi.string().required(),
   NAME: Joi.string().required(),
   NODE_ENV: Joi.string().allow([
@@ -45,7 +45,7 @@ if (error) {
 }
 
 // Connect to the MQTT broker.
-const client = mqtt.connect(process.env.MQTT_URL);
+const client = mqtt.connect(process.env.MQTT_BROKER_URL);
 
 client.on('connect', () => {
   const topic = process.env.MQTT_TOPIC;
