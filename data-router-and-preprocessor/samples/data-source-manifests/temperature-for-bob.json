@@ -1,0 +1,25 @@
+{
+  "_id": "61dff56f-0af7-4b5d-ac1d-cf93b97c79a4",
+  "macAddress": "B7-7A-7C-5C-E7-FC",
+  "dataSourceDefinitionReferenceID": "45d21de6-6ca1-460b-8860-94a5d918e9d7",
+  "dataSourceDefinitionInterfaceParameters": {
+    "parameter": [
+      {
+        "key": "protocol",
+        "value": "mqtt"
+      },
+      {
+        "key": "host",
+        "value": "localhost"
+      },
+      {
+        "key": "port",
+        "value": 1883
+      },
+      {
+        "key": "topic",
+        "value": "bob/temperature"
+      }
+    ]
+  }
+}

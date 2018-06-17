@@ -1,0 +1,26 @@
+{
+  "_id": "b8214509-949c-4e21-b984-163e5246ef14",
+  "name": "Kafka topic",
+  "communicationProtocol": "Kafka",
+  "parameters": {
+    "parameter": [
+      {
+        "name": "host",
+        "description": "The host where the Kafka broker runs.",
+        "dataType": "string",
+        "defaultValue": "localhost"
+      },
+      {
+        "name": "port",
+        "description": "The port where the Kafka broker listens.",
+        "dataType": "int",
+        "defaultValue": 9092
+      },
+      {
+        "name": "topic",
+        "description": "The Kafka topic.",
+        "dataType": "string"
+      }
+    ]
+  }
+}

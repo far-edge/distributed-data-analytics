@@ -1,0 +1,42 @@
+{
+  "_id": "1280aa71-c5b5-4716-a79e-32128b9b101a",
+  "name": "MQTT topic",
+  "communicationProtocol": "MQTT",
+  "parameters": {
+    "parameter": [
+      {
+        "name": "protocol",
+        "description": "The protocol to use to connect to the MQTT broker.",
+        "dataType": "string",
+        "defaultValue": "mqtt"
+      },
+      {
+        "name": "host",
+        "description": "The host where the MQTT broker runs.",
+        "dataType": "string",
+        "defaultValue": "localhost"
+      },
+      {
+        "name": "port",
+        "description": "The port where the MQTT broker listens.",
+        "dataType": "int",
+        "defaultValue": 1883
+      },
+      {
+        "name": "username",
+        "description": "The username to use to connect to the MQTT broker.",
+        "dataType": "string"
+      },
+      {
+        "name": "password",
+        "description": "The password to use to connect to the MQTT broker.",
+        "dataType": "string"
+      },
+      {
+        "name": "topic",
+        "description": "The MQTT topic.",
+        "dataType": "string"
+      }
+    ]
+  }
+}
