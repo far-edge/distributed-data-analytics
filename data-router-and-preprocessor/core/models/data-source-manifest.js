@@ -38,20 +38,20 @@ const DataSourceManifestSchema = new mongoose.Schema({
     default: uuidv4
   },
 
-  // The MAC address of the device that the data source manifest is connected with.
+  // The MAC address of the device that the data source is connected with.
   macAddress: {
     type: String,
     required: true
   },
 
-  // The data source definition that the data source manifest is based on.
+  // The data source definition that the data source is based on.
   dataSourceDefinitionReferenceID: {
     type: String,
     required: true
   },
 
   // The values for any parameters that the data interface of the data source definition of the
-  // data source manifest has.
+  // data source has.
   dataSourceDefinitionInterfaceParameters: {
     type: ParameterValuesSchema,
     required: false

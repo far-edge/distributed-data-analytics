@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const dataRouter = require('../../workers/data-router');
 const DataSourceManifest = require('../../models/data-source-manifest');
 const errors = require('../../common/errors');
-const logger = require('../../common/loggers').get('DATA-SOURCE-MANIFESTS');
+const logger = require('../../common/loggers').get('DATA-SOURCES');
 
 // Unregisters a data source.
 const unregisterDataSource = (input) => {

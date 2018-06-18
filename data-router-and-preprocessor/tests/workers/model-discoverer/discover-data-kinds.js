@@ -10,7 +10,9 @@ const testDiscoverDataKinds = () => {
       const id = faker.random.uuid();
       nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`).post('/data-kinds/discover', {
         _id: id
-      }).reply(200);
+      }).reply(200, {
+        dataKinds: [ ]
+      });
       const p = modelDiscoverer.discoverDataKinds({ _id: id });
       return p.should.be.fulfilled;
     });

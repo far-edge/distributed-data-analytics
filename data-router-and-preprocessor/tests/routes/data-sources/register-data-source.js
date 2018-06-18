@@ -10,8 +10,15 @@ const testRegisterDataSource = () => {
   describe('POST @ /data-sources', () => {
     it('should register a data source', () => {
       const dataSourceDefinitionReferenceID = faker.random.uuid();
-      nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`)
-        .get(`/data-source-definitions/${ dataSourceDefinitionReferenceID }`).reply(200);
+      nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`).post('/data-source-definitions/discover', {
+        _id: dataSourceDefinitionReferenceID
+      }).reply(200, {
+        dataSourceDefinitions: [
+          {
+            _id: dataSourceDefinitionReferenceID
+          }
+        ]
+      });
       const data = {
         ...{
           macAddress: faker.internet.mac(),

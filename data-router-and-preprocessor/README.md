@@ -5,11 +5,13 @@ interact with field devices.
 
 ### REQUIREMENTS
 
+* [Confluent Platform](https://www.confluent.io) >= *4.1.1*
 * [MongoDB](https://www.mongodb.com/) >= *3.6.4*
 * [Node.js](https://nodejs.org/) >= *10.1.0*
 * [npm](https://www.npmjs.com/) >= *5.6.0*
 * [Docker CE](https://www.docker.com/community-edition) >= 18.03.1 *(optional)*
 * [Docker Compose](https://docs.docker.com/compose/) >= 1.21.0 *(optional)*
+* Any message broker that implements the MQTT protocol version 3.1.x or later.
 
 ### CLONE
 

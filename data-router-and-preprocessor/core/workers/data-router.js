@@ -186,23 +186,34 @@ const _setUpDataRoute = (dataRoute) => {
 // Sets up a data route from the given endpoint.
 const setUpDataRoute = (start) => {
   logger.debug(`Set up data route from ${ start._id }.`);
+  // Data routes are set up only for MQTT topics.
+  const protocol = start.dataSourceDefinitionInterfaceParameters &&
+    start.dataSourceDefinitionInterfaceParameters.parameter ?
+    first(start.dataSourceDefinitionInterfaceParameters.parameter.filter((p) => {
+      return p.key === 'protocol';
+    })) : null;
+  const isMqttTopic = protocol && (protocol.value === 'mqtt' || protocol.value === 'mqtts');
   return Promise.try(() => {
+    if (!isMqttTopic) {
+      logger.debug(`Data route from ${ start._id } does not need to be set up.`);
+      return null;
+    }
     // Create the end of the data route.
-    return _createDataRouteEnd(start);
-  }).then((end) => {
-    // Create the data route.
-    const dataRoute = new DataRoute({
-      start,
-      end
+    return _createDataRouteEnd(start).then((end) => {
+      // Create the data route.
+      const dataRoute = new DataRoute({
+        start,
+        end
+      });
+      // Save the data route.
+      return dataRoute.save();
+    }).then((dataRoute) => {
+      // Set up the data route.
+      return _setUpDataRoute(dataRoute);
+    }).then((dataRoute) => {
+      logger.debug(`Set up data route from ${ start._id }.`);
+      return dataRoute;
     });
-    // Save the data route.
-    return dataRoute.save();
-  }).then((dataRoute) => {
-    // Set up the data route.
-    return _setUpDataRoute(dataRoute);
-  }).then((dataRoute) => {
-    logger.debug(`Set up data route from ${ start._id }.`);
-    return dataRoute;
   }).catch((error) => {
     logger.error(`Failed to set up data route from ${ start._id }.`, error);
     throw error;
@@ -212,43 +223,47 @@ const setUpDataRoute = (start) => {
 // Tears down the data route from the given endpoint.
 const tearDownDataRoute = (start) => {
   logger.debug(`Tear down data route from ${ start._id }.`);
-  const parameters = start.dataSourceDefinitionInterfaceParameters.parameter;
-  const protocol = first(parameters.filter((p) => { return p.key === 'protocol'; })).value;
-  const host = first(parameters.filter((p) => { return p.key === 'host'; })).value;
-  const topic = first(parameters.filter((p) => { return p.key === 'topic'; })).value;
-  const port = first(parameters.filter((p) => { return p.key === 'port'; })).value;
-  const url = `${ protocol }://${ host }:${ port }`;
   return Promise.try(() => {
-    return DataRoute.find({ start });
+    // Find the data route from the endpoint.
+    return DataRoute.findOne({ start });
   }).then((dataRoute) => {
-    // The data route does not exist.
+    // The data route does not ezist.
+    // Nothing to tear down.
     if (!dataRoute) {
-      logger.error(`Data route from ${ start.id } does not exist.`);
-      throw new errors.NotFoundError('DATA_ROUTE_NOT_FOUND');
-    }
-    // Unsubscribe from the topic.
-    logger.debug(`Unsubscribe from ${ topic } @ ${ url }.`);
-    return _mqtt.brokers[url].client.unsubscribe(topic).then(() => {
-      // Remove the topic from the subscribed topics for the broker.
-      const index = _mqtt.brokers[url].topics.indexOf(topic);
-      _mqtt.brokers[url].topics.splice(index, 1);
-      logger.debug(`Unsubscribed from ${ topic } @ ${ url }.`);
-      return null;
-    });
-  }).then(() => {
-    if (_mqtt.brokers[url].topics.length) {
-      logger.debug(`Stay connected to ${ url }.`);
+      logger.debug(`No data route from ${ start._id } to tear down.`);
       return null;
     }
-    logger.debug(`Disconnect from ${ url }.`);
-    return _mqtt.brokers[url].client.end().then(() => {
-      logger.debug(`Disconnected from ${ url }.`);
-      delete _mqtt.brokers[url];
-      return null;
+    const parameters = start.dataSourceDefinitionInterfaceParameters.parameter;
+    const protocol = first(parameters.filter((p) => { return p.key === 'protocol'; })).value;
+    const host = first(parameters.filter((p) => { return p.key === 'host'; })).value;
+    const topic = first(parameters.filter((p) => { return p.key === 'topic'; })).value;
+    const port = first(parameters.filter((p) => { return p.key === 'port'; })).value;
+    const url = `${ protocol }://${ host }:${ port }`;
+    return Promise.try(() => {
+      // Unsubscribe from the topic.
+      logger.debug(`Unsubscribe from ${ topic } @ ${ url }.`);
+      return _mqtt.brokers[url].client.unsubscribe(topic).then(() => {
+        // Remove the topic from the subscribed topics for the broker.
+        const index = _mqtt.brokers[url].topics.indexOf(topic);
+        _mqtt.brokers[url].topics.splice(index, 1);
+        logger.debug(`Unsubscribed from ${ topic } @ ${ url }.`);
+        return null;
+      });
+    }).then(() => {
+      if (_mqtt.brokers[url].topics.length) {
+        logger.debug(`Stay connected to ${ url }.`);
+        return null;
+      }
+      logger.debug(`Disconnect from ${ url }.`);
+      return _mqtt.brokers[url].client.end().then(() => {
+        logger.debug(`Disconnected from ${ url }.`);
+        delete _mqtt.brokers[url];
+        return null;
+      });
+    }).then(() => {
+      logger.debug(`Tear down data route from ${ start._id }.`);
+      return dataRoute;
     });
-  }).then((dataRoute) => {
-    logger.debug(`Tear down data route from ${ start._id }.`);
-    return dataRoute;
   }).catch((error) => {
     logger.error(`Failed to tear down data route from ${ start._id }.`, error);
     throw error;

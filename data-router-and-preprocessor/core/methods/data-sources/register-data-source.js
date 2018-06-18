@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const common = require('./common');
 const dataRouter = require('../../workers/data-router');
 const DataSourceManifest = require('../../models/data-source-manifest');
-const logger = require('../../common/loggers').get('DATA-SOURCE-MANIFESTS');
+const logger = require('../../common/loggers').get('DATA-SOURCES');
 
 // Registers a data source.
 const registerDataSource = (input) => {

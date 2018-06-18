@@ -5,10 +5,10 @@ const router = express.Router({ mergeParams: true });
 /**
  * @api {get} /health-check Check the health
  * @apiName CheckHealth
- * @apiDescription Checks the health of the model repository.
+ * @apiDescription Checks the health of the data router and preprocessor.
  * @apiGroup HEALTH CHECK
  *
- * @apiSuccess {Number} uptime The number of seconds the model repository has been up.
+ * @apiSuccess {Number} uptime The number of seconds the data router and preprocessor has been up.
  * @apiSuccessExample Success
  *   HTTP/1.1 200 OK
  *   {
