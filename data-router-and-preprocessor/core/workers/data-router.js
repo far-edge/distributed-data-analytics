@@ -1,6 +1,7 @@
 const kafka = require('kafka-node');
 const mqtt = require('async-mqtt');
 const Promise = require('bluebird');
+const uuidv4 = require('uuid/v4');
 
 const DataRoute = require('../models/data-route');
 const DataSourceManifest = require('../models/data-source-manifest');
@@ -17,7 +18,13 @@ const _mqtt = {
 // Everything about how to connect to Kafka topics.
 const _kafka = {
   client: null,
-  producer: null
+  producer: null,
+  cache: { }
+};
+
+// Returns the name of a Kafka topic based on the name of the corresponding MQTT topic.
+const _mqttTopic2KafkaTopic = (topic) => {
+  return topic.replace(/\//g, '.');
 };
 
 // Creates the end of the data route from the given endpoint.
@@ -103,7 +110,7 @@ const _createDataRouteEnd = (start) => {
             key: 'topic',
             value: first(start.dataSourceDefinitionInterfaceParameters.parameter.filter((p) => {
               return p.key === 'topic';
-            }).map((p) => { return p.value; })).replace(/\//g, '.')
+            }).map((p) => { return p.value; }).map((t) => { return _mqttTopic2KafkaTopic(t); }))
           }
         ]
       }
@@ -116,14 +123,32 @@ const _createDataRouteEnd = (start) => {
   });
 };
 
-// Handles the given message that was published in the given topic.
-const _handleMessage = (topic, message) => {
-  logger.debug(`Handle a message published @ ${ topic }.`);
-  // Send the message to the corresponding topic in Kafka.
+// Routes the given message that was published in the given topic.
+const _routeMessage = (topic, message) => {
+  logger.debug(`Route a message published @ ${ topic }.`);
+  const timestamp = new Date().toJSON();
   new Promise((resolve, reject) => {
+    // Construct the message to send to Kafka.
+    // NOTE: The message is essentially a live data set.
+    const ktopic = _mqttTopic2KafkaTopic(topic);
+    const cached = _kafka.cache[ktopic];
+    const data = {
+      _id: uuidv4(),
+      dataSourceManifestReferenceID: cached.dataSource,
+      timestamp,
+      observation: [
+        {
+          _id: uuidv4(),
+          dataKindReferenceID: cached.dataKind,
+          timestamp,
+          value: message.toString()
+        }
+      ]
+    };
+    // Send the message to the corresponding topic in Kafka.
     _kafka.producer.send([{
-      topic: topic.replace(/\//g, '.'),
-      messages: [ message.toString() ]
+      topic: _mqttTopic2KafkaTopic(topic),
+      messages: [ JSON.stringify(data) ]
     }], (error, _data) => {
       if (error) {
         reject(error);
@@ -132,11 +157,11 @@ const _handleMessage = (topic, message) => {
       }
     });
   }).then(() => {
-    logger.debug(`Handled a message published @ ${ topic }.`);
+    logger.debug(`Routed a message published @ ${ topic }.`);
   }).catch((error) => {
-    logger.error(`Failed to handle a message published @ ${ topic }.`, error);
+    logger.error(`Failed to route a message published @ ${ topic }.`, error);
   });
-  logger.debug(`Requested for a message published @ ${ topic } to be handled.`);
+  logger.debug(`Requested for a message published @ ${ topic } to be routed.`);
 };
 
 // Sets up the given data route.
@@ -149,6 +174,19 @@ const _setUpDataRoute = (dataRoute) => {
   const port = first(parameters.filter((p) => { return p.key === 'port'; })).value;
   const url = `${ protocol }://${ host }:${ port }`;
   return Promise.try(() => {
+    // Cache information about the data route.
+    const id = dataRoute.start.dataSourceDefinitionReferenceID;
+    return modelDiscoverer.discoverDataSourceDefinitions({
+      _id: id
+    }).then((dataSourceDefinitions) => {
+      const dataKind = dataSourceDefinitions[0].dataKindReferenceIDs.dataKindReferenceID[0];
+      _kafka.cache[_mqttTopic2KafkaTopic(topic)] = {
+        dataSource: dataRoute.end._id,
+        dataKind: dataKind
+      };
+      return null;
+    });
+  }).then(() => {
     // Connect to the MQTT broker (if needed).
     if (_mqtt.brokers[url]) {
       logger.debug(`Already connected to ${ url }.`);
@@ -162,7 +200,7 @@ const _setUpDataRoute = (dataRoute) => {
       });
       client.on('error', reject);
     }).then((client) => {
-      client.on('message', _handleMessage);
+      client.on('message', _routeMessage);
       _mqtt.brokers[url] = { client, topics: [] };
       logger.debug(`Connected to ${ url }.`);
       return null;

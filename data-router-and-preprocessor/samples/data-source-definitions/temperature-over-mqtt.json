@@ -1,10 +1,10 @@
 {
-  "_id": "45d21de6-6ca1-460b-8860-94a5d918e9d7",
+  "_id": "9cc0b6fd-5f13-4f44-8c16-e652d7d1fcd1",
   "name": "Temperature (in Celsius) in plain text over MQTT",
-  "dataInterfaceReferenceID": "1280aa71-c5b5-4716-a79e-32128b9b101a",
+  "dataInterfaceReferenceID": "d9f01910-f981-4462-8814-fe5fdfadc936",
   "dataKindReferenceIDs": {
     "dataKindReferenceID": [
-      "18c60a22-6c17-49fc-8cb2-bf3fc4aea11d"
+      "58e18269-f471-436c-a04b-eded12ade3a9"
     ]
   }
 }

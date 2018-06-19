@@ -13,7 +13,7 @@
     "doc": "./bin/gen-doc-config.sh && apidoc -i routes -o doc",
     "lint": "eslint *.js blueprints core hooks middlewares routes tests --color",
     "precommit": "npm run lint",
-    "start": "nodemon --inspect=9228 --exec 'node -r dotenv/config' server.js",
+    "start": "nodemon --inspect=9227 --exec 'node -r dotenv/config' server.js",
     "test": "nyc _mocha --require=dotenv/config --require=./tests/assertions --timeout 10000 --exit ./tests/**/**/*.js",
     "test:single": "mocha --require=dotenv/config --require=./tests/assertions --timeout 10000"
   },

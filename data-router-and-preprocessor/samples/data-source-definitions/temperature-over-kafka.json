@@ -1,10 +1,10 @@
 {
-  "_id": "8a746cdc-7e66-4e2d-a3e0-9adfc606d2a0",
+  "_id": "19071576-3b3c-400a-b7c5-de84e5f0716a",
   "name": "Temperature (in Celsius) in JSON over Kafka",
-  "dataInterfaceReferenceID": "b8214509-949c-4e21-b984-163e5246ef14",
+  "dataInterfaceReferenceID": "dba8fba0-a143-47ba-a07c-3cdc38516077",
   "dataKindReferenceIDs": {
     "dataKindReferenceID": [
-      "5e4806a4-8819-4b28-b81d-5ca7bce61bfc"
+      "5f77b195-f276-4e15-b9ac-e146daa71d60"
     ]
   }
 }

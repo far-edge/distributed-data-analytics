@@ -16,7 +16,7 @@ const router = express.Router({ mergeParams: true });
  *   }
  *
  * @apiExample {curl} Example
- *   curl -X GET http://localhost:8888/api/health-check
+ *   curl -X GET http://localhost:7777/api/health-check
  */
 router.route('/').get((_req, res, _next) => {
   res.json({

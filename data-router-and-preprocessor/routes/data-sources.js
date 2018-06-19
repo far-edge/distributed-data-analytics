@@ -77,7 +77,7 @@ const router = express.Router({ mergeParams: true });
  * @apiExample {curl} Example
  *   curl -H 'Content-Type: application/json' \
  *        -d '{ "macAddress": "B7-7A-7C-5C-E7-FC", "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412", "dataSourceDefinitionInterfaceParameters": { "parameter": [ { "key": "host", "value": "localhost" }, { "key": "port", "value": 1883 } ] } }' \
- *        -X POST http://localhost:8888/api/data-sources
+ *        -X POST http://localhost:7777/api/data-sources
  */
 router.route('/').post(validate(blueprint.registerDataSource), lift(method.registerDataSource),
   respond);
@@ -102,7 +102,7 @@ router.route('/').post(validate(blueprint.registerDataSource), lift(method.regis
  *   }
  *
  * @apiExample {curl} Example
- *   curl -X DELETE http://localhost:8888/api/data-sources/abc59548-3805-476a-8992-977184effa90
+ *   curl -X DELETE http://localhost:7777/api/data-sources/abc59548-3805-476a-8992-977184effa90
  */
 router.route('/:id').delete(validate(blueprint.unregisterDataSource),
   lift(method.unregisterDataSource), respond);
@@ -158,7 +158,7 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
  * @apiExample {curl} Example
  *   curl -H 'Content-Type: application/json' \
  *        -d '{ "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412" }' \
- *        -X POST http://localhost:8888/api/data-sources/discover
+ *        -X POST http://localhost:7777/api/data-sources/discover
  */
 router.route('/discover').post(validate(blueprint.discoverDataSources),
   lift(method.discoverDataSources), respond);

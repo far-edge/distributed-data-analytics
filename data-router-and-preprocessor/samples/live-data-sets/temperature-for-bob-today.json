@@ -1,0 +1,13 @@
+{
+  "_id": "82c768f3-638b-4cc6-97b9-44970246dc76",
+  "dataSourceManifestReferenceID": "5a34adba-785e-4854-a3e1-fcc75496dece",
+  "timestamp": "2018-06-19T18:13:51.0Z",
+  "observation": [
+    {
+      "_id": "66956691-b8ee-4ab4-8d73-9b082f949ce3",
+      "dataKindReferenceID": "dk://e22ea144-c8f7-4018-aa2f-b094202881a5",
+      "timestamp": "2018-06-19T18:13:51.0Z",
+      "value": 36
+    }
+  ]
+}

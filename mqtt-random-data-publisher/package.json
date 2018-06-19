@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint *.js --color",
     "precommit": "npm run lint",
-    "start": "nodemon --inspect --exec 'node -r dotenv/config' index.js"
+    "start": "nodemon --inspect=9228 --exec 'node -r dotenv/config' index.js"
   },
   "repository": {
     "type": "git",
