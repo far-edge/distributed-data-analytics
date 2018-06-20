@@ -4,4 +4,6 @@ RemoteSystemsTempFiles
 .project
 .classpath
 .settings/
-
+.metadata/
+.recommenders/
+target/
