@@ -37,7 +37,7 @@ const router = express.Router({ mergeParams: true });
  *     }
  *   }
  *
- * @apiSuccess {String} _id The ID of the data source.
+ * @apiSuccess {String} id The ID of the data source.
  * @apiSuccess {String} macAddress The MAC address of the device that the data source is connected with.
  * @apiSuccess {String} dataSourceDefinitionReferenceID The data source definition that the data source is based on.
  * @apiSuccess {Object[]} [dataSourceDefinitionInterfaceParameters.parameter] The values for any parameters that the data interface of the data source definition of the
@@ -46,7 +46,7 @@ const router = express.Router({ mergeParams: true });
  * @apiSuccessExample Success
  *   HTTP/1.1 201 Created
  *   {
- *     "_id": "abc59548-3805-476a-8992-977184effa90",
+ *     "id": "abc59548-3805-476a-8992-977184effa90",
  *     "macAddress": "B7-7A-7C-5C-E7-FC",
  *     "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412",
  *     "dataSourceDefinitionInterfaceParameters": {
@@ -120,7 +120,7 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
  *   }
  *
  * @apiSuccess {Object[]} dataSources The data sources that match the given criteria.
- * @apiSuccess {String} dataSources._id The ID of the data source.
+ * @apiSuccess {String} dataSources.id The ID of the data source.
  * @apiSuccess {String} dataSources.macAddress The MAC address of the device that the data source is connected with.
  * @apiSuccess {String} dataSources.dataSourceDefinitionReferenceID The data source definition that the data source is based on.
  * @apiSuccess {Object[]} [dataSources.dataSourceDefinitionInterfaceParameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
@@ -130,7 +130,7 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
  *   HTTP/1.1 200 OK
  *   {
  *     "dataSources": [
- *       "_id": "abc59548-3805-476a-8992-977184effa90",
+ *       "id": "abc59548-3805-476a-8992-977184effa90",
  *       "macAddress": "B7-7A-7C-5C-E7-FC",
  *       "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412",
  *       "dataSourceDefinitionInterfaceParameters": {

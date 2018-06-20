@@ -11,11 +11,11 @@ const testRegisterDataSource = () => {
     it('should register a data source', () => {
       const dataSourceDefinitionReferenceID = faker.random.uuid();
       nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`).post('/data-source-definitions/discover', {
-        _id: dataSourceDefinitionReferenceID
+        id: dataSourceDefinitionReferenceID
       }).reply(200, {
         dataSourceDefinitions: [
           {
-            _id: dataSourceDefinitionReferenceID
+            id: dataSourceDefinitionReferenceID
           }
         ]
       });

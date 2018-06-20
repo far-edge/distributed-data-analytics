@@ -10,9 +10,7 @@ const validateDataSourceManifest = (dataSourceManifest) => {
   return Promise.try(() => {
     // The data source definition must exist.
     const id = dataSourceManifest.dataSourceDefinitionReferenceID;
-    return modelDiscoverer.discoverDataSourceDefinitions({
-      _id: id
-    }).then((dataSourceDefinitions) => {
+    return modelDiscoverer.discoverDataSourceDefinitions({ id }).then((dataSourceDefinitions) => {
       if (!dataSourceDefinitions.length) {
         logger.error(`Data source defintion ${ id } does not exist.`);
         throw new errors.BadRequestError('DATA_SOURCE_DEFINITION_NOT_FOUND');

@@ -9,11 +9,11 @@ const testDiscoverDataIntefaces = () => {
     it('should discover data interfaces', () => {
       const id = faker.random.uuid();
       nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`).post('/data-interfaces/discover', {
-        _id: id
+        id
       }).reply(200, {
         dataInterfaces: [ ]
       });
-      const p = modelDiscoverer.discoverDataInterfaces({ _id: id });
+      const p = modelDiscoverer.discoverDataInterfaces({ id });
       return p.should.be.fulfilled;
     });
   });

@@ -1,5 +1,5 @@
 {
-  "_id": "d9f01910-f981-4462-8814-fe5fdfadc936",
+  "id": "bb3f7a0d-da9a-4b5a-8699-0a2d95da5843",
   "name": "MQTT topic",
   "communicationProtocol": "MQTT",
   "parameters": {

@@ -1,5 +1,5 @@
 {
-  "_id": "dba8fba0-a143-47ba-a07c-3cdc38516077",
+  "id": "569b4562-871b-4f55-863c-1aea0b47f57f",
   "name": "Kafka topic",
   "communicationProtocol": "Kafka",
   "parameters": {

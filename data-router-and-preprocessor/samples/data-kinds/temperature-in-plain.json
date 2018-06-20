@@ -1,5 +1,5 @@
 {
-  "_id": "58e18269-f471-436c-a04b-eded12ade3a9",
+  "id": "d188c222-2875-47b4-b961-0ee37aa6e15d",
   "name": "Temperature (in Celsius) in plain text",
   "description": "Temperature values (in Celsius) in plain text format.",
   "format": "Plain text",

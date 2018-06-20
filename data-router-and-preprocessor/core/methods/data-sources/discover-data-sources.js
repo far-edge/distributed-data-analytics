@@ -9,6 +9,7 @@ const discoverDataSources = (input) => {
   return Promise.try(() => {
     // Find the data sources that match the given criteria.
     return DataSourceManifest.find({
+      ...(input.id ? { _id: input.id } : { }),
       ...(input.dataSourceDefinitionReferenceID ? {
         dataSourceDefinitionReferenceID: input.dataSourceDefinitionReferenceID
       } : { })

@@ -9,11 +9,11 @@ const testDiscoverDataSourceDefinitions = () => {
     it('should discover data source definitions', () => {
       const id = faker.random.uuid();
       nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`).post('/data-source-definitions/discover', {
-        _id: id
+        id
       }).reply(200, {
         dataSourceDefinitions: [ ]
       });
-      const p = modelDiscoverer.discoverDataSourceDefinitions({ _id: id });
+      const p = modelDiscoverer.discoverDataSourceDefinitions({ id });
       return p.should.be.fulfilled;
     });
   });
