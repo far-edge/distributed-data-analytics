@@ -8,6 +8,7 @@ const _parameter = validations.object().keys({
 // How to discover data sources.
 const discoverDataSources = {
   body: {
+    id: validations.id().allow('').allow(null).optional(),
     dataSourceDefinitionReferenceID: validations.id().allow('').allow(null).optional()
   }
 };

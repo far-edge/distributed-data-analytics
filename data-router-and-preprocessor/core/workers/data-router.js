@@ -33,9 +33,7 @@ const _createDataRouteEnd = (start) => {
   return Promise.try(() => {
     // Discover the data source definition for the start.
     const id = start.dataSourceDefinitionReferenceID;
-    return modelDiscoverer.discoverDataSourceDefinitions({
-      _id: id
-    }).then((dataSourceDefinitions) => {
+    return modelDiscoverer.discoverDataSourceDefinitions({ id }).then((dataSourceDefinitions) => {
       if (!dataSourceDefinitions.length) {
         logger.error(`Data source definition ${ id } does not exist.`);
         throw new errors.BadRequestError('DATA_SOURCE_DEFINITION_NOT_FOUND');
@@ -45,9 +43,7 @@ const _createDataRouteEnd = (start) => {
   }).then((dataSourceDefinition) => {
     // Discover the data kind for the start.
     const id = dataSourceDefinition.dataKindReferenceIDs.dataKindReferenceID[0];
-    return modelDiscoverer.discoverDataKinds({
-      _id: id
-    }).then((dataKinds) => {
+    return modelDiscoverer.discoverDataKinds({ id }).then((dataKinds) => {
       if (!dataKinds.length) {
         logger.error(`Data kind ${ id } does not exist.`);
         throw new errors.BadRequestError('DATA_KIND_NOT_FOUND');
@@ -82,11 +78,11 @@ const _createDataRouteEnd = (start) => {
   }).spread((dataKind, dataInterface) => {
     // Discover the data source definition for the end.
     return modelDiscoverer.discoverDataSourceDefinitions({
-      dataKindReferenceID: dataKind._id,
-      dataInterfaceReferenceID: dataInterface._id
+      dataKindReferenceID: dataKind.id,
+      dataInterfaceReferenceID: dataInterface.id
     }).then((dataSourceDefinitions) => {
       if (!dataSourceDefinitions.length) {
-        logger.error(`Data source definition for data kind ${ dataKind._id } does not exist.`);
+        logger.error(`Data source definition for data kind ${ dataKind.id } does not exist.`);
         throw new errors.BadRequestError('DATA_SOURCE_DEFINITION_NOT_FOUND');
       }
       return dataSourceDefinitions[0];
@@ -95,7 +91,7 @@ const _createDataRouteEnd = (start) => {
     // Create the end of the data route.
     const end = new DataSourceManifest({
       macAddress: process.env.MAC_ADDRESS,
-      dataSourceDefinitionReferenceID: dataSourceDefinition._id,
+      dataSourceDefinitionReferenceID: dataSourceDefinition.id,
       dataSourceDefinitionInterfaceParameters: {
         parameter: [
           {
@@ -129,16 +125,16 @@ const _routeMessage = (topic, message) => {
   const timestamp = new Date().toJSON();
   new Promise((resolve, reject) => {
     // Construct the message to send to Kafka.
-    // NOTE: The message is essentially a live data set.
+    // NOTE: The message is essentially a data set.
     const ktopic = _mqttTopic2KafkaTopic(topic);
     const cached = _kafka.cache[ktopic];
     const data = {
-      _id: uuidv4(),
+      id: uuidv4(),
       dataSourceManifestReferenceID: cached.dataSource,
       timestamp,
       observation: [
         {
-          _id: uuidv4(),
+          id: uuidv4(),
           dataKindReferenceID: cached.dataKind,
           timestamp,
           value: message.toString()
@@ -175,10 +171,8 @@ const _setUpDataRoute = (dataRoute) => {
   const url = `${ protocol }://${ host }:${ port }`;
   return Promise.try(() => {
     // Cache information about the data route.
-    const id = dataRoute.start.dataSourceDefinitionReferenceID;
-    return modelDiscoverer.discoverDataSourceDefinitions({
-      _id: id
-    }).then((dataSourceDefinitions) => {
+    const id = dataRoute.end.dataSourceDefinitionReferenceID;
+    return modelDiscoverer.discoverDataSourceDefinitions({ id }).then((dataSourceDefinitions) => {
       const dataKind = dataSourceDefinitions[0].dataKindReferenceIDs.dataKindReferenceID[0];
       _kafka.cache[_mqttTopic2KafkaTopic(topic)] = {
         dataSource: dataRoute.end._id,

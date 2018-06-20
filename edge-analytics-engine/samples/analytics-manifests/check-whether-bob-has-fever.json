@@ -1,0 +1,33 @@
+{
+  "id": "a969bd74-63a2-4a21-a094-c2491b132f28",
+  "analyticsProcessors": {
+    "apm": [
+      {
+        "id": "f96404e9-cf7e-4044-b0d5-1a4afbc2cecd",
+        "analyticsProcessorDefinitionReferenceID": "ccf8c3b3-f4f7-4ff4-8746-3bf43ab34618",
+        "parameters": {
+          "parameter": [
+            {
+              "key": "operator",
+              "value": "GE"
+            },
+            {
+              "key": "threshold",
+              "value": 38
+            }
+          ]
+        },
+        "dataSink": {
+          "dataSourceManifestReferenceID": "a969bd74-63a2-4a21-a094-c2491b132f28"
+        },
+        "dataSources": {
+          "dataSource": [
+            {
+              "dataSourceManifestReferenceID": "9ecf1a34-846a-4b77-82f6-b9991874065b"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

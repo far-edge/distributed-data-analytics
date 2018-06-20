@@ -1,7 +1,7 @@
 {
-  "_id": "14c1fa7c-44ec-4b24-a2c3-066e38939b8b",
+  "id": "419a6c65-acaa-4302-83fd-ec36fb588492",
   "macAddress": "B7-7A-7C-5C-E7-FC",
-  "dataSourceDefinitionReferenceID": "9cc0b6fd-5f13-4f44-8c16-e652d7d1fcd1",
+  "dataSourceDefinitionReferenceID": "1b1b623c-cf1d-4dfb-a84a-3329dc79aac3",
   "dataSourceDefinitionInterfaceParameters": {
     "parameter": [
       {
