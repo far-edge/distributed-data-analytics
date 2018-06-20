@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  faredge-edge-analytics-engine:
+    container_name: "faredge-edge-analytics-engine"
+    build: .
+    volumes:
+      - ./:/faredge/edge-analytics-engine
+    env_file: .env
+    ports:
+      - "${PORT}:${PORT}"
+    links:
+      - faredge-analytics-storage
+    command: /faredge/edge-analytics-engine/node_modules/.bin/nodemon --inspect --exec 'node' server.js
+
+  faredge-analytics-storage:
+    container_name: "faredge-analytics-storage"
+    image: mongo:3.6.4
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "${MONGODB_PORT}:27017"

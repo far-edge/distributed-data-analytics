@@ -1,0 +1,22 @@
+{
+  "id": "ccf8c3b3-f4f7-4ff4-8746-3bf43ab34618",
+  "name": "Filterer",
+  "processorType": "filter",
+  "version": "1.0.0",
+  "copyright": "Athens Information Technology",
+  "description": "Processors that filter values based on some condition.",
+  "parameters": {
+    "parameter": [
+      {
+        "name": "operator",
+        "description": "The operator in the condition (EQ, GE, GT, LE, LT, NE).",
+        "dataType": "string"
+      },
+      {
+        "name": "threshold",
+        "description": "The threshold in the condition.",
+        "dataType": "float"
+      }
+    ]
+  }
+}

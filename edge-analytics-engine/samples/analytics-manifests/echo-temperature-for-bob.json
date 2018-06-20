@@ -1,0 +1,21 @@
+{
+  "id": "59f4c59c-066d-44a1-89e5-b305ffa92384",
+  "analyticsProcessors": {
+    "apm": [
+      {
+        "id": "fcfbe01b-bf4b-4ba1-9a5a-82c59f607d98",
+        "analyticsProcessorDefinitionReferenceID": "6527f2b5-e4aa-41d7-b2b8-4cd1c2339b8c",
+        "dataSink": {
+          "dataSourceManifestReferenceID": "168ba0fa-1fda-46b6-8894-76d847bdf5f7"
+        },
+        "dataSources": {
+          "dataSource": [
+            {
+              "dataSourceManifestReferenceID": "9ecf1a34-846a-4b77-82f6-b9991874065b"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
