@@ -5,3 +5,14 @@
 ##### [Unreleased]
 
 **ADDED**
+
+* Create an analytics instance.
+* Destroy an analytics instance.
+* Update the specification of an analytics instance.
+* Get an analytics instance.
+* Get the state of an analytics instance.
+* Get the specification of an analytics instance.
+* Discover analytics instances.
+* Start an analytics instance.
+* Stop an anelytics instance.
+
