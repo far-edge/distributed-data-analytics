@@ -1,10 +1,10 @@
 {
-  "id": "a969bd74-63a2-4a21-a094-c2491b132f28",
+  "id": "ca233753-90f3-40ea-be95-8d6611c65199",
   "analyticsProcessors": {
     "apm": [
       {
-        "id": "f96404e9-cf7e-4044-b0d5-1a4afbc2cecd",
-        "analyticsProcessorDefinitionReferenceID": "ccf8c3b3-f4f7-4ff4-8746-3bf43ab34618",
+        "id": "4cbd1964-1abb-41af-afed-9afc8f82331b",
+        "analyticsProcessorDefinitionReferenceID": "b6cbf43d-6378-47cf-bd19-330521d9cfa6",
         "parameters": {
           "parameter": [
             {
@@ -18,7 +18,7 @@
           ]
         },
         "dataSink": {
-          "dataSourceManifestReferenceID": "a969bd74-63a2-4a21-a094-c2491b132f28"
+          "dataSourceManifestReferenceID": "685e8a7e-f609-4573-ac04-cf76e258fc00"
         },
         "dataSources": {
           "dataSource": [

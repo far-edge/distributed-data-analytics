@@ -1,10 +1,11 @@
 {
-  "id": "ccf8c3b3-f4f7-4ff4-8746-3bf43ab34618",
+  "id": "b6cbf43d-6378-47cf-bd19-330521d9cfa6",
   "name": "Filterer",
   "processorType": "filter",
   "version": "1.0.0",
   "copyright": "Athens Information Technology",
   "description": "Processors that filter values based on some condition.",
+  "processorLocation": "/Users/katerina/Desktop/filter-1.0.0-jar-with-dependencies.jar",
   "parameters": {
     "parameter": [
       {

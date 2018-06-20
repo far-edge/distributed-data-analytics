@@ -61,6 +61,8 @@ const _startAnalyticsProcessor = (analyticsProcessorManifest) => {
     let properties = '';
     // Put the analytics processor ID to the system property faredge.processor.id.
     properties = `${ properties } -Dfaredge.processor.id=${ id }`;
+    // Put the data sink ID to the system property faredge.sink.id.
+    properties = `${ properties } -Dfaredge.sink.id=${ dataSinkId }`;
     // Put the the value for a parameter x that is passed to one of the data sources of the
     // analytics processor to the system property faredge.input.$.x, where $ is the index of the
     // data source.
