@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 
+const AnalyticsManifest = require('../../models/analytics-manifest');
 const chisels = require('../../common/chisels');
 const dataSourceDiscoverer = require('../../workers/data-source-discoverer');
 const errors = require('../../common/errors');
@@ -9,6 +10,20 @@ const modelDiscoverer = require('../../workers/model-discoverer');
 // Validates an analytics manifest.
 const validateAnalyticsManifest = (analyticsManifest) => {
   return Promise.try(() => {
+    // The name must be unique among all analytics instances.
+    return AnalyticsManifest.count({
+      _id: {
+        $ne: analyticsManifest._id
+      },
+      name: analyticsManifest.name
+    }).then((exists) => {
+      if (exists) {
+        logger.error(`Name ${ analyticsManifest.name } is taken.`);
+        throw new errors.BadRequestError('NAME_TAKEN');
+      }
+      return null;
+    });
+  }).then(() => {
     // All analytics processor definitions must exist.
     return Promise.each(analyticsManifest.analyticsProcessors.apm.map((p) => {
       return p.analyticsProcessorDefinitionReferenceID;

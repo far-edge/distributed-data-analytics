@@ -30,6 +30,8 @@ const updateAnalyticsInstanceSpecification = (input) => {
     });
   }).then((analyticsManifest) => {
     // Change the analytics manifest.
+    analyticsManifest.name = input.name;
+    analyticsManifest.description = input.description;
     analyticsManifest.edgeGatewayReferenceID = input.edgeGatewayReferenceID;
     analyticsManifest.analyticsProcessors = input.analyticsProcessors;
     // Validate the analytics manifest.

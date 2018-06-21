@@ -54,10 +54,22 @@ const DataSourceManifestsSchema = new mongoose.Schema({
 // Analytics processor manifest.
 const AnalyticsProcessorManifestSchema = new mongoose.Schema({
 
-  // The ID of the analytics processor manifest.
+  // The ID of the analytics processor.
   _id: {
     type: String,
     default: uuidv4
+  },
+
+  // The name of the analytics processor.
+  name: {
+    type: String,
+    required: false
+  },
+
+  // The description of the analytics processor.
+  description: {
+    type: String,
+    required: false
   },
 
   // The analytics processor definition that the analytics processor is based on.
@@ -109,10 +121,23 @@ const AnalyticsProcessorManifestsSchema = new mongoose.Schema({
 // Analytics manifests.
 const AnalyticsManifestSchema = new mongoose.Schema({
 
-  // The ID of the analytics manifest.
+  // The ID of the analytics instance.
   _id: {
     type: String,
     default: uuidv4
+  },
+
+  // The name of the analytics instance.
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  // The description of the analytics instance.
+  description: {
+    type: String,
+    required: false
   },
 
   // The edge gateway that the analytics instance runs on.

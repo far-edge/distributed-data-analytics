@@ -3,14 +3,16 @@ const Promise = require('bluebird');
 
 const AnalyticsManifest = require('../../core/models/analytics-manifest');
 
-// Creates an analytics instance
+// Creates an analytics instance.
 const createAnalyticsInstance = (overrides) => {
   const analyticsManifest = new AnalyticsManifest({
     ...{
+      name: faker.random.words(2),
       analyticsProcessors: {
         apm: [
           {
             ...{
+              name: faker.random.words(2),
               analyticsProcessorDefinitionReferenceID: faker.random.uuid(),
               dataSources: {
                 dataSource: [
@@ -23,6 +25,7 @@ const createAnalyticsInstance = (overrides) => {
                 dataSourceManifestReferenceID: faker.random.uuid()
               }
             },
+            ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
             ...(faker.random.boolean() ? {
               parameters: {
                 parameter: [
@@ -38,9 +41,8 @@ const createAnalyticsInstance = (overrides) => {
         ]
       }
     },
-    ...(faker.random.boolean() ? {
-      edgeGatewayReferenceID: faker.random.uuid()
-    } : { }),
+    ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
+    ...(faker.random.boolean() ? { edgeGatewayReferenceID: faker.random.uuid() } : { }),
     ...overrides
   });
   return Promise.try(() => {

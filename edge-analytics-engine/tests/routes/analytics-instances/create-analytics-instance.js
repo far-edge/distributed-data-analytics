@@ -11,10 +11,12 @@ const testCreateAnalyticsInstance = () => {
     it('should create an analytics instance', () => {
       const data = {
         ...{
+          name: faker.random.words(2),
           analyticsProcessors: {
             apm: [
               {
                 ...{
+                  name: faker.random.words(2),
                   analyticsProcessorDefinitionReferenceID: faker.random.uuid(),
                   dataSources: {
                     dataSource: [
@@ -27,6 +29,7 @@ const testCreateAnalyticsInstance = () => {
                     dataSourceManifestReferenceID: faker.random.uuid()
                   }
                 },
+                ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
                 ...(faker.random.boolean() ? {
                   parameters: {
                     parameter: [
@@ -42,41 +45,41 @@ const testCreateAnalyticsInstance = () => {
             ]
           }
         },
-        ...(faker.random.boolean() ? {
-          edgeGatewayReferenceID: faker.random.uuid()
-        } : { })
+        ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
+        ...(faker.random.boolean() ? { edgeGatewayReferenceID: faker.random.uuid() } : { })
       };
-      const apdid = data.analyticsProcessors.apm[0].analyticsProcessorDefinitionReferenceID;
+      const analyticsProcessorDefinitionId =
+        data.analyticsProcessors.apm[0].analyticsProcessorDefinitionReferenceID;
       nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`)
         .post('/analytics-processor-definitions/discover', {
-          id: apdid
+          id: analyticsProcessorDefinitionId
         }).reply(200, {
           analyticsProcessorDefinitions: [
             {
-              id: apdid
+              id: analyticsProcessorDefinitionId
             }
           ]
         });
-      let dsmid =
+      const dataSourceId =
         data.analyticsProcessors.apm[0].dataSources.dataSource[0].dataSourceManifestReferenceID;
       nock(`${ process.env.DATA_ROUTER_AND_PREPROCESSOR_BASE_URL }`)
         .post('/data-sources/discover', {
-          id: dsmid
+          id: dataSourceId
         }).reply(200, {
           dataSources: [
             {
-              id: dsmid
+              id: dataSourceId
             }
           ]
         });
-      dsmid = data.analyticsProcessors.apm[0].dataSink.dataSourceManifestReferenceID;
+      const dataSinkId = data.analyticsProcessors.apm[0].dataSink.dataSourceManifestReferenceID;
       nock(`${ process.env.DATA_ROUTER_AND_PREPROCESSOR_BASE_URL }`)
         .post('/data-sources/discover', {
-          id: dsmid
+          id: dataSinkId
         }).reply(200, {
           dataSources: [
             {
-              id: dsmid
+              id: dataSinkId
             }
           ]
         });

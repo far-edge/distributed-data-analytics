@@ -14,8 +14,12 @@ const router = express.Router({ mergeParams: true });
  * @apiDescription Creates an analytics instance.
  * @apiGroup ANALYTICS INSTANCES
  *
+ * @apiParam {String} name The name of the analytics instance.
+ * @apiParam {String} [description] The description of the analytics instance.
  * @apiParam {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiParam {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
+ * @apiParam {String} [analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiParam {String} [analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiParam {String} analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiParam {Object[]} [analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiParam {String} analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -25,6 +29,7 @@ const router = express.Router({ mergeParams: true });
  * @apiParam {String} analyticsProcessors.apm.dataSink.dataSourceManifestReferenceID The data sink where the analytics processor puts its data.
  * @apiParamExample {json} Request
  *   {
+ *     "name": "Heat detector",
  *     "analyticsProcessors": {
  *       "apm": [
  *         "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -43,9 +48,13 @@ const router = express.Router({ mergeParams: true });
  *   }
  *
  * @apiSuccess {String} id The ID of the analytics instance.
+ * @apiSuccess {String} name The name of the analytics instance.
+ * @apiSuccess {String} [description] The description of the analytics instance.
  * @apiSuccess {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsProcessors.apm.id The ID of the analytics processor.
+ * @apiSuccess {String} [analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiSuccess {String} [analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiSuccess {String} analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiSuccess {Object[]} [analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiSuccess {String} analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -57,6 +66,7 @@ const router = express.Router({ mergeParams: true });
  *   HTTP/1.1 201 Created
  *   {
  *     "id": "abc59548-3805-476a-8992-977184effa90",
+ *     "name": "Heat detector",
  *     "analyticsProcessors": {
  *       "apm": [
  *         "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -81,6 +91,8 @@ const router = express.Router({ mergeParams: true });
  * @apiError (Error 400) MISSING_ANALYTICS_PROCESSOR_DEFINITION_REFERENCE_ID The analytics processor definition is missing.
  * @apiError (Error 400) MISSING_DATA_SINK The data sink is missing.
  * @apiError (Error 400) MISSING_DATA_SOURCES The data sources are missing.
+ * @apiError (Error 400) MISSING_NAME The name is missing.
+ * @apiError (Error 400) NAME_TAKEN The name is taken.
  * @apiError (Error 500) FAILED The request failed.
  * @apiErrorExample Error
  *   HTTP/1.1 400 Bad Request
@@ -90,7 +102,7 @@ const router = express.Router({ mergeParams: true });
  *
  * @apiExample {curl} Example
  *   curl -H 'Content-Type: application/json' \
- *        -d '{ "analyticsProcessors": { "apm": [ "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014", "dataSources": { "dataSource": [ { "dataSourceManifestReferenceID": "d6393790-42eb-4b66-b4d7-a3ec32cc0953" } ] }, "dataSink": { "dataSourceManifestReferenceID": "736b3b50-765f-4f27-9a70-e27c4b9c6541" } ] } }' \
+ *        -d '{ "name": "Heat detector", "analyticsProcessors": { "apm": [ "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014", "dataSources": { "dataSource": [ { "dataSourceManifestReferenceID": "d6393790-42eb-4b66-b4d7-a3ec32cc0953" } ] }, "dataSink": { "dataSourceManifestReferenceID": "736b3b50-765f-4f27-9a70-e27c4b9c6541" } ] } }' \
  *        -X POST http://localhost:9999/api/analytics-instances
  */
 router.route('/').post(validate(blueprint.createAnalyticsInstance),
@@ -103,8 +115,12 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  * @apiGroup ANALYTICS INSTANCES
  *
  * @apiParam {String} id The ID of the analytics instance.
+ * @apiParam {String} name The name of the analytics instance.
+ * @apiParam {String} [description] The description of the analytics instance.
  * @apiParam {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiParam {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
+ * @apiParam {String} [analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiParam {String} [analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiParam {String} analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiParam {Object[]} [analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiParam {String} analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -113,6 +129,7 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  * @apiParam {String} analyticsProcessors.apm.dataSink.dataSourceManifestReferenceID The data sink where the analytics processor puts its data.
  * @apiParamExample {json} Request
  *   {
+ *     "name": "Heat detector",
  *     "analyticsProcessors": {
  *       "apm": [
  *         "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -131,9 +148,13 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  *   }
  *
  * @apiSuccess {String} id The ID of the analytics instance.
+ * @apiSuccess {String} name The name of the analytics instance.
+ * @apiSuccess {String} [description] The description of the analytics instance.
  * @apiSuccess {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsProcessors The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsProcessors.apm.id The ID of the analytics processor.
+ * @apiSuccess {String} [analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiSuccess {String} [analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiSuccess {String} analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiSuccess {Object[]} [analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiSuccess {String} analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -145,6 +166,7 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  *   HTTP/1.1 200 OK
  *   {
  *     "id": "abc59548-3805-476a-8992-977184effa90",
+ *     "name": "Heat detector",
  *     "analyticsProcessors": {
  *       "apm": [
  *         "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -170,6 +192,8 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  * @apiError (Error 400) MISSING_ANALYTICS_PROCESSOR_DEFINITION_REFERENCE_ID The analytics processor definition is missing.
  * @apiError (Error 400) MISSING_DATA_SINK The data sink is missing.
  * @apiError (Error 400) MISSING_DATA_SOURCES The data sources are missing.
+ * @apiError (Error 400) MISSING_NAME The name is missing.
+ * @apiError (Error 400) NAME_TAKEN The name is taken.
  * @apiError (Error 404) ANALYTICS_INSTANCE_NOT_FOUND The analytics instance was not found.
  * @apiError (Error 500) FAILED The request failed.
  * @apiErrorExample Error
@@ -180,7 +204,7 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  *
  * @apiExample {curl} Example
  *   curl -H 'Content-Type: application/json' \
- *        -d '{ "analyticsProcessors": { "apm": [ "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014", "dataSources": { "dataSource": [ { "dataSourceManifestReferenceID": "d6393790-42eb-4b66-b4d7-a3ec32cc0953" } ] }, "dataSink": { "dataSourceManifestReferenceID": "736b3b50-765f-4f27-9a70-e27c4b9c6541" } ] } }' \
+ *        -d '{ "name": "Heat detector", "analyticsProcessors": { "apm": [ "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014", "dataSources": { "dataSource": [ { "dataSourceManifestReferenceID": "d6393790-42eb-4b66-b4d7-a3ec32cc0953" } ] }, "dataSink": { "dataSourceManifestReferenceID": "736b3b50-765f-4f27-9a70-e27c4b9c6541" } ] } }' \
  *        -X PUT http://localhost:9999/api/analytics-instances/abc59548-3805-476a-8992-977184effa90/specification
  */
 router.route('/:id/specification').put(validate(blueprint.updateAnalyticsInstanceSpecification),
@@ -222,9 +246,13 @@ router.route('/:id').delete(validate(blueprint.destroyAnalyticsInstance),
  *
  * @apiSuccess {String} id The ID of the analytics instance.
  * @apiSuccess {Object} specification The specification of the analytics instance.
+ * @apiSuccess {String} specification.name The name of the analytics instance.
+ * @apiSuccess {String} [specification.description] The description of the analytics instance.
  * @apiSuccess {String} [specification.edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} specification.analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} specification.analyticsProcessors.apm.id The ID of the analytics processor.
+ * @apiSuccess {String} [specification.analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiSuccess {String} [specification.analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiSuccess {String} specification.analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiSuccess {Object[]} [specification.analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiSuccess {String} specification.analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -238,6 +266,7 @@ router.route('/:id').delete(validate(blueprint.destroyAnalyticsInstance),
  *   {
  *     "id": "abc59548-3805-476a-8992-977184effa90",
  *     "specification": {
+ *       "name": "Heat detector",
  *       "analyticsProcessors": {
  *         "apm": [
  *           "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -280,9 +309,13 @@ router.route('/:id').get(validate(blueprint.getAnalyticsInstance),
  * @apiParam {String} id The ID of the analytics instance.
  *
  * @apiSuccess {String} id The ID of the analytics instance.
+ * @apiSuccess {String} name The name of the analytics instance.
+ * @apiSuccess {String} [description] The description of the analytics instance.
  * @apiSuccess {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsProcessors.apm.id The ID of the analytics processor.
+ * @apiSuccess {String} [analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiSuccess {String} [analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiSuccess {String} analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiSuccess {Object[]} [analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiSuccess {String} analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -294,6 +327,7 @@ router.route('/:id').get(validate(blueprint.getAnalyticsInstance),
  *   HTTP/1.1 200 OK
  *   {
  *     "id": "abc59548-3805-476a-8992-977184effa90",
+ *     "name": "Heat detector",
  *     "analyticsProcessors": {
  *       "apm": [
  *         "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -363,6 +397,8 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  * @apiGroup ANALYTICS INSTANCES
  *
  * @apiParam {String} [id] The ID of the analytics instance.
+ * @apiParam {String} [name] The name of the analytics instance.
+ * @apiParam {String} [description] The description of the analytics instance.
  * @apiParam {String} [state] The state of the analytics instance (RUNNING, STOPPED).
  * @apiParamExample {json} Request
  *   {
@@ -370,9 +406,13 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  *
  * @apiSuccess {String} analyticsInstances.id The ID of the analytics instance.
  * @apiSuccess {Object} analyticsInstances.specification The specification of the analytics instance.
+ * @apiSuccess {String} analyticsInstances.specification.name The name of the analytics instance.
+ * @apiSuccess {String} [analyticsInstances.specification.description] The description of the analytics instance.
  * @apiSuccess {String} [analyticsInstances.specification.edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsInstances.specification.analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsInstances.specification.analyticsProcessors.apm.id The ID of the analytics processor.
+ * @apiSuccess {String} [analyticsInstances.specification.analyticsProcessors.apm.name] The name of the analytics processor.
+ * @apiSuccess {String} [analyticsInstances.specification.analyticsProcessors.apm.description] The description of the analytics processor.
  * @apiSuccess {String} analyticsInstances.specification.analyticsProcessors.apm.analyticsProcessorDefinitionReferenceID The analytics processor definition that the analytics processor is based on.
  * @apiSuccess {Object[]} [analyticsInstances.specification.analyticsProcessors.apm.parameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
  * @apiSuccess {String} analyticsInstances.specification.analyticsProcessors.apm.parameters.parameter.key The name of the parameter.
@@ -388,6 +428,7 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  *       {
  *         "id": "abc59548-3805-476a-8992-977184effa90",
  *         "specification": {
+ *           "name": "Heat detector",
  *           "analyticsProcessors": {
  *             "apm": [
  *               "analyticsProcessorDefinitionReferenceID": "5376c0aa-a93a-49e7-a5d9-16ff56d2e014",
@@ -451,7 +492,7 @@ router.route('/:id/start').post(validate(blueprint.startAnalyticsInstance),
   lift(method.startAnalyticsInstance), respond);
 
 /**
- * @api {post} /analytics-instances/:id/stop Start analytics instance
+ * @api {post} /analytics-instances/:id/stop Stop analytics instance
  * @apiName StopAnalyticsInstance
  * @apiDescription Stops an analytics instance.
  * @apiGroup ANALYTICS INSTANCES

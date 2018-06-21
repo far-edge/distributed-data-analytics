@@ -1,9 +1,13 @@
 {
   "id": "ca233753-90f3-40ea-be95-8d6611c65199",
+  "name": "Bob fever detector",
+  "description": "Detects whether Bob has fever.",
   "analyticsProcessors": {
     "apm": [
       {
         "id": "4cbd1964-1abb-41af-afed-9afc8f82331b",
+        "name": "Bob temperature filterer",
+        "description": "Filters Bob's temperature and keeps only the values that show that Bob has fever.",
         "analyticsProcessorDefinitionReferenceID": "b6cbf43d-6378-47cf-bd19-330521d9cfa6",
         "parameters": {
           "parameter": [

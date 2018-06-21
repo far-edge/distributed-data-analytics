@@ -10,11 +10,11 @@ services:
     ports:
       - "${PORT}:${PORT}"
     links:
-      - faredge-analytics-storage
+      - faredge-edge-analytics-storage
     command: /faredge/edge-analytics-engine/node_modules/.bin/nodemon --inspect --exec 'node' server.js
 
-  faredge-analytics-storage:
-    container_name: "faredge-analytics-storage"
+  faredge-edge-analytics-storage:
+    container_name: "faredge-edge-analytics-storage"
     image: mongo:3.6.4
     volumes:
       - ./data/db:/data/db

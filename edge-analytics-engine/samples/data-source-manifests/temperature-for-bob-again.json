@@ -1,5 +1,7 @@
 {
   "id" : "168ba0fa-1fda-46b6-8894-76d847bdf5f7",
+  "name": "Bob temperature (again) in JSON over Kafka",
+  "description": "The temperature of Bob (again) in JSON format over Kafka.",
   "macAddress" : "E5-E5-B9-5C-45-10",
   "dataSourceDefinitionReferenceID" : "13b66a56-5faa-46b6-ba7a-936518b0c6d8",
   "dataSourceDefinitionInterfaceParameters" : {

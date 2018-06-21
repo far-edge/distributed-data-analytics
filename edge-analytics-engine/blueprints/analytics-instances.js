@@ -11,6 +11,8 @@ const _dataSource = validations.object().keys({
 });
 
 const _processor = validations.object().keys({
+  name: validations.string().allow('').allow(null).optional(),
+  description: validations.string().allow('').allow(null).optional(),
   analyticsProcessorDefinitionReferenceID: validations.id().required(),
   parameters: validations.object().keys({
     parameter: validations.array().items(_parameter).required()
@@ -24,6 +26,8 @@ const _processor = validations.object().keys({
 // How to create an analytics instance.
 const createAnalyticsInstance = {
   body: {
+    name: validations.string().required(),
+    description: validations.string().allow('').allow(null).optional(),
     edgeGatewayReferenceID: validations.string().allow('').allow(null).optional(),
     analyticsProcessors: validations.object().keys({
       apm: validations.array().items(_processor).required()
@@ -42,6 +46,8 @@ const destroyAnalyticsInstance = {
 const discoverAnalyticsInstances = {
   body: {
     id: validations.id().allow('').allow(null).optional(),
+    name: validations.string().allow('').allow(null).optional(),
+    description: validations.string().allow('').allow(null).optional(),
     state: validations.string().valid(State.ALL).allow('').allow(null).optional()
   }
 };
@@ -87,6 +93,8 @@ const updateAnalyticsInstanceSpecification = {
     id: validations.id().required()
   },
   body: {
+    name: validations.string().required(),
+    description: validations.string().allow('').allow(null).optional(),
     edgeGatewayReferenceID: validations.string().allow('').allow(null).optional(),
     analyticsProcessors: validations.object().keys({
       apm: validations.array().items(_processor).required()
