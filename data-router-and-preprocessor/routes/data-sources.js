@@ -74,7 +74,9 @@ const router = express.Router({ mergeParams: true });
  * @apiError (Error 400) DATA_SOURCE_DEFINITION_NOT_FOUND The data source definition was not found.
  * @apiError (Error 400) DUPLICATE_PARAMETER_VALUE There are two or more values for the same parameter.
  * @apiError (Error 400) MISSING_MAC_ADDRESS The MAC address is missing.
+ * @apiError (Error 400) MISSING_NAME The name is missing.
  * @apiError (Error 400) MISSING_DATA_SOURCE_DEFINITION_REFERENCE_ID The data source definition is missing.
+ * @apiError (Error 400) NAME_TAKEN The name is taken.
  * @apiError (Error 500) FAILED The request failed.
  * @apiErrorExample Error
  *   HTTP/1.1 400 Bad Request
