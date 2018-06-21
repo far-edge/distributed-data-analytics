@@ -9,7 +9,7 @@ const _parameter = validations.object().keys({
 const discoverDataSources = {
   body: {
     id: validations.id().allow('').allow(null).optional(),
-    name: validations.string().allow('').allow(null).optional(),
+    name: validations.string().required(),
     description: validations.string().allow('').allow(null).optional(),
     dataSourceDefinitionReferenceID: validations.id().allow('').allow(null).optional()
   }
