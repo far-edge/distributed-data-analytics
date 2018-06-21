@@ -9,21 +9,23 @@ const requests = require('../../requests');
 const testRegisterDataSource = () => {
   describe('POST @ /data-sources', () => {
     it('should register a data source', () => {
-      const dataSourceDefinitionReferenceID = faker.random.uuid();
+      const dataSourceDefinitionReferenceId = faker.random.uuid();
       nock(`${ process.env.MODEL_REPOSITORY_BASE_URL }`).post('/data-source-definitions/discover', {
-        id: dataSourceDefinitionReferenceID
+        id: dataSourceDefinitionReferenceId
       }).reply(200, {
         dataSourceDefinitions: [
           {
-            id: dataSourceDefinitionReferenceID
+            id: dataSourceDefinitionReferenceId
           }
         ]
       });
       const data = {
         ...{
+          name: faker.random.words(2),
           macAddress: faker.internet.mac(),
-          dataSourceDefinitionReferenceID
+          dataSourceDefinitionReferenceID: dataSourceDefinitionReferenceId
         },
+        ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
         ...(faker.random.boolean() ? {
           dataSourceDefinitionInterfaceParameters: {
             parameter: [

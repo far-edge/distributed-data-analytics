@@ -7,9 +7,11 @@ const DataSourceManifest = require('../../core/models/data-source-manifest');
 const registerDataSource = (overrides) => {
   const dataSourceManifest = new DataSourceManifest({
     ...{
+      name: faker.random.words(2),
       macAddress: faker.internet.mac(),
       dataSourceDefinitionReferenceID: faker.random.uuid()
     },
+    ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
     ...(faker.random.boolean() ? {
       dataSourceDefinitionInterfaceParameters: {
         parameter: [

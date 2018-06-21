@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 
 const chisels = require('../../common/chisels');
+const DataSourceManifest = require('../../models/data-source-manifest');
 const errors = require('../../common/errors');
 const logger = require('../../common/loggers').get('DATA-SOURCES');
 const modelDiscoverer = require('../../workers/model-discoverer');
@@ -8,6 +9,20 @@ const modelDiscoverer = require('../../workers/model-discoverer');
 // Validates a data source manifest.
 const validateDataSourceManifest = (dataSourceManifest) => {
   return Promise.try(() => {
+    // The name must be unique among all data sources.
+    return DataSourceManifest.count({
+      _id: {
+        $ne: dataSourceManifest._id
+      },
+      name: dataSourceManifest.name
+    }).then((exists) => {
+      if (exists) {
+        logger.error(`Name ${ dataSourceManifest.name } is taken.`);
+        throw new errors.BadRequestError('NAME_TAKEN');
+      }
+      return null;
+    });
+  }).then(() => {
     // The data source definition must exist.
     const id = dataSourceManifest.dataSourceDefinitionReferenceID;
     return modelDiscoverer.discoverDataSourceDefinitions({ id }).then((dataSourceDefinitions) => {

@@ -1,6 +1,7 @@
 {
   "id": "bb3f7a0d-da9a-4b5a-8699-0a2d95da5843",
   "name": "MQTT topic",
+  "description": "MQTT topics.",
   "communicationProtocol": "MQTT",
   "parameters": {
     "parameter": [

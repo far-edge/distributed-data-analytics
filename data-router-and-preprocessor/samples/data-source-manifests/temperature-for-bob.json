@@ -1,5 +1,7 @@
 {
   "id": "419a6c65-acaa-4302-83fd-ec36fb588492",
+  "name": "Bob temperature in plain text over MQTT",
+  "description": "The temperature of Bob in plain text over MQTT.",
   "macAddress": "B7-7A-7C-5C-E7-FC",
   "dataSourceDefinitionReferenceID": "1b1b623c-cf1d-4dfb-a84a-3329dc79aac3",
   "dataSourceDefinitionInterfaceParameters": {

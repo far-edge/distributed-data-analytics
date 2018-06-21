@@ -10,6 +10,8 @@ const discoverDataSources = (input) => {
     // Find the data sources that match the given criteria.
     return DataSourceManifest.find({
       ...(input.id ? { _id: input.id } : { }),
+      ...(input.name ? { name: input.name } : { }),
+      ...(input.description ? { description: input.description } : { }),
       ...(input.dataSourceDefinitionReferenceID ? {
         dataSourceDefinitionReferenceID: input.dataSourceDefinitionReferenceID
       } : { })

@@ -9,6 +9,8 @@ const _parameter = validations.object().keys({
 const discoverDataSources = {
   body: {
     id: validations.id().allow('').allow(null).optional(),
+    name: validations.string().allow('').allow(null).optional(),
+    description: validations.string().allow('').allow(null).optional(),
     dataSourceDefinitionReferenceID: validations.id().allow('').allow(null).optional()
   }
 };
@@ -16,6 +18,8 @@ const discoverDataSources = {
 // How to register a data source.
 const registerDataSource = {
   body: {
+    name: validations.string().allow('').allow(null).optional(),
+    description: validations.string().allow('').allow(null).optional(),
     macAddress: validations.string().required(),
     dataSourceDefinitionReferenceID: validations.id().required(),
     dataSourceDefinitionInterfaceParameters: validations.object().keys({

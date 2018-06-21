@@ -90,6 +90,8 @@ const _createDataRouteEnd = (start) => {
   }).then((dataSourceDefinition) => {
     // Create the end of the data route.
     const end = new DataSourceManifest({
+      name: start.name.replace('plain text', 'JSON').replace('MQTT', 'Kafka'),
+      description: start.description.replace('plain text', 'JSON').replace('MQTT', 'Kafka'),
       macAddress: process.env.MAC_ADDRESS,
       dataSourceDefinitionReferenceID: dataSourceDefinition.id,
       dataSourceDefinitionInterfaceParameters: {

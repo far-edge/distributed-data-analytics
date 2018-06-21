@@ -14,6 +14,8 @@ const router = express.Router({ mergeParams: true });
  * @apiDescription Registers a data source.
  * @apiGroup DATA SOURCES
  *
+ * @apiParam {String} name The name of the data source.
+ * @apiParam {String} [description] The description of the data source.
  * @apiParam {String} macAddress The MAC address of the device that the data source is connected with.
  * @apiParam {String} dataSourceDefinitionReferenceID The data source definition that the data source is based on.
  * @apiParam {Object[]} [dataSourceDefinitionInterfaceParameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
@@ -21,6 +23,8 @@ const router = express.Router({ mergeParams: true });
  * @apiParam {String} dataSourceDefinitionInterfaceParameters.parameter.value The value of the parameter.
  * @apiParamExample {json} Request
  *   {
+ *     "name": "Machine #1 temperature in JSON over MQTT",
+ *     "description": "The temperature for machine #1 in JSON format over MQTT.",
  *     "macAddress": "B7-7A-7C-5C-E7-FC",
  *     "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412",
  *     "dataSourceDefinitionInterfaceParameters": {
@@ -38,6 +42,8 @@ const router = express.Router({ mergeParams: true });
  *   }
  *
  * @apiSuccess {String} id The ID of the data source.
+ * @apiSuccess {String} name The name of the data source.
+ * @apiSuccess {String} [description] The description of the data source.
  * @apiSuccess {String} macAddress The MAC address of the device that the data source is connected with.
  * @apiSuccess {String} dataSourceDefinitionReferenceID The data source definition that the data source is based on.
  * @apiSuccess {Object[]} [dataSourceDefinitionInterfaceParameters.parameter] The values for any parameters that the data interface of the data source definition of the
@@ -47,6 +53,8 @@ const router = express.Router({ mergeParams: true });
  *   HTTP/1.1 201 Created
  *   {
  *     "id": "abc59548-3805-476a-8992-977184effa90",
+ *     "name": "Machine #1 temperature in JSON over MQTT",
+ *     "description": "The temperature for machine #1 in JSON format over MQTT.",
  *     "macAddress": "B7-7A-7C-5C-E7-FC",
  *     "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412",
  *     "dataSourceDefinitionInterfaceParameters": {
@@ -76,7 +84,7 @@ const router = express.Router({ mergeParams: true });
  *
  * @apiExample {curl} Example
  *   curl -H 'Content-Type: application/json' \
- *        -d '{ "macAddress": "B7-7A-7C-5C-E7-FC", "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412", "dataSourceDefinitionInterfaceParameters": { "parameter": [ { "key": "host", "value": "localhost" }, { "key": "port", "value": 1883 } ] } }' \
+ *        -d '{ "name": "Machine #1 temperature in JSON over MQTT, "description": "The temperature for machine #1 in JSON format over MQTT.", "macAddress": "B7-7A-7C-5C-E7-FC", "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412", "dataSourceDefinitionInterfaceParameters": { "parameter": [ { "key": "host", "value": "localhost" }, { "key": "port", "value": 1883 } ] } }' \
  *        -X POST http://localhost:7777/api/data-sources
  */
 router.route('/').post(validate(blueprint.registerDataSource), lift(method.registerDataSource),
@@ -121,6 +129,8 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
  *
  * @apiSuccess {Object[]} dataSources The data sources that match the given criteria.
  * @apiSuccess {String} dataSources.id The ID of the data source.
+ * @apiSuccess {String} dataSources.name The name of the data source.
+ * @apiSuccess {String} [dataSources.description] The description of the data source.
  * @apiSuccess {String} dataSources.macAddress The MAC address of the device that the data source is connected with.
  * @apiSuccess {String} dataSources.dataSourceDefinitionReferenceID The data source definition that the data source is based on.
  * @apiSuccess {Object[]} [dataSources.dataSourceDefinitionInterfaceParameters.parameter] The values for any parameters that the data interface of the data source definition of the data source has.
@@ -131,6 +141,8 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
  *   {
  *     "dataSources": [
  *       "id": "abc59548-3805-476a-8992-977184effa90",
+ *       "name": "Machine #1 temperature in JSON over MQTT",
+ *       "description": "The temperature for machine #1 in JSON format over MQTT.",
  *       "macAddress": "B7-7A-7C-5C-E7-FC",
  *       "dataSourceDefinitionReferenceID": "a89524a9-e8f7-455c-857b-0380ff308412",
  *       "dataSourceDefinitionInterfaceParameters": {

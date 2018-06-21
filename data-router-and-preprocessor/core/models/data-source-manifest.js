@@ -32,10 +32,23 @@ const ParameterValuesSchema = new mongoose.Schema({
 // Data source manifests.
 const DataSourceManifestSchema = new mongoose.Schema({
 
-  // The ID of the data source manifest.
+  // The ID of the data source.
   _id: {
     type: String,
     default: uuidv4
+  },
+
+  // The name of the data source.
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  // The description of the data source.
+  description: {
+    type: String,
+    required: false
   },
 
   // The MAC address of the device that the data source is connected with.
