@@ -3,6 +3,7 @@ const logger = require('./core/common/loggers').get('SERVER');
 const mongoose = require('mongoose');
 const util = require('util');
 
+const AIM = require('./core/workers/analytics-instance-manager');
 const app = require('./app');
 const blueprint = require('./blueprints/env');
 const validations = require('./core/common/validations');
@@ -16,12 +17,6 @@ if (error) {
 
 // Load all models.
 require('./core/models/index');
-
-// Load all loaders.
-require('./core/loaders/index');
-
-// Load all workers.
-require('./core/workers/index');
 
 // Connect to the database.
 const auth = process.env.MONGODB_USER || process.env.MONGODB_PASSWORD ?
@@ -37,6 +32,8 @@ mongoose.connect(uri, {
   poolSize: process.env.MONGODB_POOL_SIZE
 }).then(() => {
   logger.info(`System connected to the database @ ${ uriwa }.`);
+  // Initialise AIM.
+  return AIM.init();
 }).catch((error) => {
   logger.error(`System failed to connect to the database @ ${ uriwa }.`, error);
 });
@@ -56,5 +53,15 @@ if (!module.parent) {
     logger.info(`Server started in ${process.env.NODE_ENV} mode on port ${ process.env.PORT }.`);
   });
 }
+
+process.on('exit', () => {
+  // Shutdown the analytics instance manager.
+  AIM.shutDown();
+});
+
+process.on('SIGINT', () => {
+  // Shutdown the analytics instance manager.
+  AIM.shutDown();
+});
 
 module.exports = app;

@@ -184,7 +184,7 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  *     }
  *   }
  *
- * @apiError (Error 404) ANALYTICS_INSTANCE_NOT_STOPPED The analytics instance is not stopped.
+ * @apiError (Error 404) ANALYTICS_INSTANCE_RUNNING The analytics instance is running.
  * @apiError (Error 400) ANALYTICS_PROCESSOR_DEFINITION_NOT_FOUND The analytics processor definition was not found.
  * @apiError (Error 400) DATA_SINK_NOT_FOUND One or more of the data sinks was not found.
  * @apiError (Error 400) DATA_SOURCE_NOT_FOUND One or more of the data sources was not found.
@@ -199,7 +199,7 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  * @apiErrorExample Error
  *   HTTP/1.1 400 Bad Request
  *   {
- *     "error": "ANALYTICS_INSTANCE_NOT_STOPPED"
+ *     "error": "ANALYTICS_INSTANCE_RUNNING"
  *   }
  *
  * @apiExample {curl} Example
@@ -221,7 +221,7 @@ router.route('/:id/specification').put(validate(blueprint.updateAnalyticsInstanc
  * @apiSuccessExample Success
  *   HTTP/1.1 204 No Content
  *
- * @apiError (Error 400) ANALYTICS_INSTANCE_NOT_STOPPED The analytics instance is not stopped.
+ * @apiError (Error 400) ANALYTICS_INSTANCE_EUNNING The analytics instance is running.
  * @apiError (Error 404) ANALYTICS_INSTANCE_NOT_FOUND The analytics instance was not found.
  * @apiError (Error 500) FAILED The request failed.
  * @apiErrorExample Error
@@ -260,7 +260,7 @@ router.route('/:id').delete(validate(blueprint.destroyAnalyticsInstance),
  * @apiSuccess {Object[]} specification.analyticsProcessors.apm.dataSources.dataSource The data sources where the analytics processor gets its data from.
  * @apiSuccess {String} specification.analyticsProcessors.apm.dataSources.dataSource.dataSourceManifestReferenceID The data source.
  * @apiSuccess {String} specification/analyticsProcessors.apm.dataSink.dataSourceManifestReferenceID The data sink where the analytics processor puts its data.
- * @apiSuccess {String} state The state of the analytics instance (RUNNING, STOPPED).
+ * @apiSuccess {String} state The state of the analytics instance (FAILED, RUNNING, STOPPED).
  * @apiSuccessExample Success
  *   HTTP/1.1 200 OK
  *   {
@@ -368,7 +368,7 @@ router.route('/:id/specification').get(validate(blueprint.getAnalyticsInstanceSp
  * @apiParam {String} id The ID of the analytics instance.
  *
  * @apiSuccess {String} id The ID of the analytics instance.
- * @apiSuccess {String} state The state of the analytics instance (RUNNING, STOPPED).
+ * @apiSuccess {String} state The state of the analytics instance (FAILED, RUNNING, STOPPED).
  * @apiSuccessExample Success
  *   HTTP/1.1 200 OK
  *   {
@@ -399,7 +399,7 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  * @apiParam {String} [id] The ID of the analytics instance.
  * @apiParam {String} [name] The name of the analytics instance.
  * @apiParam {String} [description] The description of the analytics instance.
- * @apiParam {String} [state] The state of the analytics instance (RUNNING, STOPPED).
+ * @apiParam {String} [state] The state of the analytics instance (FAILED, RUNNING, STOPPED).
  * @apiParamExample {json} Request
  *   {
  *   }
@@ -420,7 +420,7 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  * @apiSuccess {Object[]} analyticsInstances.specification.analyticsProcessors.apm.dataSources.dataSource The data sources where the analytics processor gets its data from.
  * @apiSuccess {String} analyticsInstances.specification.analyticsProcessors.apm.dataSources.dataSource.dataSourceManifestReferenceID The data source.
  * @apiSuccess {Object} analyticsInstances.specification.analyticsProcessors.apm.dataSink.dataSourceManifestReferenceID The data sink where the analytics processor puts its data.
- * @apiSuccess {String} analyticsInstances.state The state of the analytics instance (RUNNING, STOPPED).
+ * @apiSuccess {String} analyticsInstances.state The state of the analytics instance (FAILED, RUNNING, STOPPED).
  * @apiSuccessExample Success
  *   HTTP/1.1 200 OK
  *   {
@@ -476,7 +476,7 @@ router.route('/discover').post(validate(blueprint.discoverAnalyticsInstances),
  * @apiSuccessExample Success
  *   HTTP/1.1 204 No Content
  *
- * @apiError (Error 400) ANALYTICS_INSTANCE_NOT_STOPPED The analytics instance is not stopped.
+ * @apiError (Error 400) ANALYTICS_INSTANCE_RUNNING The analytics instance is already running.
  * @apiError (Error 404) ANALYTICS_INSTANCE_NOT_FOUND The analytics instance was not found.
  * @apiError (Error 500) FAILED The request failed.
  * @apiErrorExample Error

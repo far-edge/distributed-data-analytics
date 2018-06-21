@@ -21,10 +21,10 @@ const updateAnalyticsInstanceSpecification = (input) => {
     }
     // Get the state of the analytics instance.
     return AIM.getAnalyticsInstanceState(input.id).then((state) => {
-      // The analytics instance is not stopped.
-      if (state !== State.STOPPED) {
-        logger.error(`Analytics instance ${ input.id } is not stopped.`);
-        throw new errors.BadRequestError('ANALYTICS_INSTANCE_NOT_STOPPED');
+      // The analytics instance is running.
+      if (state === State.RUNNING) {
+        logger.error(`Analytics instance ${ input.id } is running.`);
+        throw new errors.BadRequestError('ANALYTICS_INSTANCE_RUNNING');
       }
       return analyticsManifest;
     });
