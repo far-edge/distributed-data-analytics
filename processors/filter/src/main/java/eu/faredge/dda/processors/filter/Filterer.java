@@ -11,6 +11,7 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler;
 import org.apache.kafka.streams.kstream.Produced;
 
 import eu.faredge.dda.processors.common.config.ProcessorConfig;
@@ -44,6 +45,8 @@ public class Filterer {
                         System.getProperty("faredge.input.0.port", "9092")));
         configuration.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10 * 1000);
         configuration.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
+        configuration.put(StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG,
+                LogAndContinueExceptionHandler.class);
 
         // Set up serializers and deserializers.
         final Serde<DataSet> serde = Serdes.serdeFrom(new DataSetSerializer(), new DataSetDeserializer());
