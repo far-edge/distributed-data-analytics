@@ -1,7 +1,8 @@
 package eu.faredge.dda.processors.filter;
 
-import java.util.Arrays;
+import java.util.Date;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.apache.kafka.common.serialization.Serde;
@@ -51,8 +52,9 @@ public class Filterer {
         final StreamsBuilder builder = new StreamsBuilder();
         final Operators operator = Operators.valueOf(System.getProperty("faredge.operator"));
         final Float threshold = Float.parseFloat(System.getProperty("faredge.threshold"));
+        final String sink = System.getProperty(ProcessorConfig.SINK_ID_CONFIG);
         final Predicate<Observation> p = (o) -> {
-            final Float v = Float.parseFloat((String)o.getValue());
+            final Float v = Float.parseFloat((String) o.getValue());
             switch (operator) {
             case EQ:
                 return v.compareTo(threshold) == 0;
@@ -70,15 +72,15 @@ public class Filterer {
                 return false;
             }
         };
+        // NOTE: We assume that each data set has exactly one observation.
         builder.stream(System.getProperty("faredge.input.0.topic"), Consumed.with(Serdes.String(), serde))
                 .filter((key, value) -> {
-                    return Arrays.stream(value.getObservation()).anyMatch(p);
+                    return p.test(value.getObservation()[0]);
                 }).map((key, value) -> {
-                    final DataSet newValue = new DataSet();
-                    newValue.setId(value.getId());
-                    newValue.setDataSourceManifestReferenceID(value.getDataSourceManifestReferenceID());
-                    newValue.setTimestamp(value.getTimestamp());
-                    newValue.setObservation(Arrays.stream(value.getObservation()).filter(p).toArray(Observation[]::new));
+                    final DataSet newValue = DataSet.from(value);
+                    newValue.setId(UUID.randomUUID().toString());
+                    newValue.setDataSourceManifestReferenceID(sink);
+                    newValue.setTimestamp(new Date());
                     return KeyValue.pair(key, newValue);
                 }).to(System.getProperty("faredge.output.topic"), Produced.with(Serdes.String(), serde));
 

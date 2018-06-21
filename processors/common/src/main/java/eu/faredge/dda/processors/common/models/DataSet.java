@@ -1,5 +1,6 @@
 package eu.faredge.dda.processors.common.models;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -24,6 +25,8 @@ public class DataSet {
 
     /**
      * The observations in this data set.
+     * 
+     * NOTE: Assume that each data set has exactly one observation.
      */
     private Observation[] observation;
 
@@ -111,6 +114,26 @@ public class DataSet {
     }
 
     /**
+     * Constructs a new data set as a clone of the specified one.
+     * 
+     * @param dataSet
+     *            the observation to clone.
+     * @return the clone.
+     */
+    public static final DataSet from(DataSet dataSet) {
+        final DataSet clone = new DataSet();
+        clone.id = dataSet.id;
+        clone.dataSourceManifestReferenceID = dataSet.dataSourceManifestReferenceID;
+        if (dataSet.timestamp != null) {
+            clone.timestamp = new Date(dataSet.timestamp.getTime());
+        }
+        if (dataSet.observation != null) {
+            clone.observation = Arrays.copyOf(dataSet.observation, dataSet.observation.length);
+        }
+        return clone;
+    }
+
+    /**
      * This class represents observations in a data set.
      */
     public static class Observation {
@@ -126,7 +149,12 @@ public class DataSet {
         private String dataKindReferenceID;
 
         /**
-         * When this observation was made (or generated).
+         * Where this observation was made.
+         */
+        private Location location;
+
+        /**
+         * When this observation was made.
          */
         private Date timestamp;
 
@@ -181,9 +209,28 @@ public class DataSet {
         }
 
         /**
-         * Gets when this observation was made (or generated).
+         * Gets where this observation was made.
          * 
-         * @return when this observation was made (or generated).
+         * @return where this observation was made.
+         */
+        public Location getLocation() {
+            return location;
+        }
+
+        /**
+         * Sets where this observation was made.
+         * 
+         * @param location
+         *            where this observation was made.
+         */
+        public void setLocation(Location location) {
+            this.location = location;
+        }
+
+        /**
+         * Gets when this observation was made.
+         * 
+         * @return when this observation was made.
          */
         public Date getTimestamp() {
             return timestamp;
@@ -216,6 +263,28 @@ public class DataSet {
          */
         public void setValue(Object value) {
             this.value = value;
+        }
+
+        /**
+         * Constructs a new observation as a clone of the specified one.
+         * 
+         * @param observation
+         *            the observation to clone.
+         * @return the clone.
+         */
+        public static final Observation from(Observation observation) {
+            final Observation clone = new Observation();
+            clone.id = observation.id;
+            clone.dataKindReferenceID = observation.dataKindReferenceID;
+            if (observation.location != null) {
+                clone.location = Location.from(observation.location);
+            }
+            if (observation.timestamp != null) {
+                clone.timestamp = new Date(observation.timestamp.getTime());
+            }
+            // NOTE: Let's assume that the value is something immutable.
+            clone.value = observation.value;
+            return clone;
         }
     }
 }

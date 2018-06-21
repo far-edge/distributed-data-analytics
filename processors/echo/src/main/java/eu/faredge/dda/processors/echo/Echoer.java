@@ -1,10 +1,13 @@
 package eu.faredge.dda.processors.echo;
 
+import java.util.Date;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.streams.Consumed;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Produced;
@@ -37,8 +40,15 @@ public class Echoer {
 
         // Define the processing topology.
         final StreamsBuilder builder = new StreamsBuilder();
+        final String sink = System.getProperty(ProcessorConfig.SINK_ID_CONFIG);
         builder.stream(System.getProperty("faredge.input.0.topic"), Consumed.with(Serdes.String(), serde))
-                .to(System.getProperty("faredge.output.topic"), Produced.with(Serdes.String(), serde));
+                .map((key, value) -> {
+                    final DataSet newValue = DataSet.from(value);
+                    newValue.setId(UUID.randomUUID().toString());
+                    newValue.setDataSourceManifestReferenceID(sink);
+                    newValue.setTimestamp(new Date());
+                    return KeyValue.pair(key, newValue);
+                }).to(System.getProperty("faredge.output.topic"), Produced.with(Serdes.String(), serde));
         final KafkaStreams streams = new KafkaStreams(builder.build(), configuration);
 
         // Clean up the local state.
