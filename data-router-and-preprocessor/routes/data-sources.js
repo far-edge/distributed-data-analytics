@@ -98,7 +98,7 @@ router.route('/').post(validate(blueprint.registerDataSource), lift(method.regis
  * @apiDescription Unregisters a data source.
  * @apiGroup DATA SOURCES
  *
- * @apiSuccess {String} id The ID of the data source.
+ * @apiParam {String} id The ID of the data source.
  *
  * @apiSuccessExample Success
  *   HTTP/1.1 204 No Content
@@ -123,6 +123,8 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
  * @apiDescription Discovers data sources.
  * @apiGroup DATA SOURCES
  *
+ * @apiParam {String} [id] The ID of the data source.
+ * @apiParam {String} [name] The name of the data source.
  * @apiParam {String} [dataSourceDefinitionReferenceID] The data source definition of the data source.
  * @apiParamExample {json} Request
  *   {
