@@ -1,0 +1,75 @@
+{
+  "name": "faredge-open-api-for-analytics",
+  "description": "The FAR-EDGE open API for analytics.",
+  "author": "Athens Information Technology <info@ait.gr>",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "server.js",
+  "engines": {
+    "node": ">=10.1.0",
+    "npm": ">=5.6.0"
+  },
+  "scripts": {
+    "doc": "./bin/gen-doc-config.sh && apidoc -i routes -o doc",
+    "lint": "eslint *.js blueprints core hooks middlewares routes tests --color",
+    "precommit": "npm run lint",
+    "start": "nodemon --inspect=9225 --exec 'node -r dotenv/config' server.js",
+    "test": "nyc _mocha --require=dotenv/config --require=./tests/assertions --timeout 10000 --exit ./tests/**/**/*.js",
+    "test:single": "mocha --require=dotenv/config --require=./tests/assertions --timeout 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:far-edge/distributed-data-analytics.git"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.18.2",
+    "callsite-record": "^4.1.0",
+    "child-process-promise": "^2.2.1",
+    "compression": "^1.7.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.15.5",
+    "express-winston": "^2.4.0",
+    "helmet": "^3.8.2",
+    "joi": "^13.2.0",
+    "kafka-node": "^2.6.1",
+    "moment": "^2.18.1",
+    "mongoose": "^5.0.17",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.2.1",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "apidoc": "^0.17.6",
+    "chai": "^4.1.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.0.0",
+    "chai-like": "^1.1.1",
+    "chai-things": "^0.2.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "faker": "^4.1.0",
+    "husky": "^0.14.3",
+    "mocha": "^5.1.1",
+    "nock": "^9.3.2",
+    "nodemon": "^1.11.0",
+    "nyc": "^11.4.1",
+    "sinon": "^6.0.0"
+  },
+  "nyc": {
+    "exclude": [
+      "tests"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ]
+  }
+}

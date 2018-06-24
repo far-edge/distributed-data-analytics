@@ -1,0 +1,12 @@
+{
+  "id": "561d3d4e-d2fe-4401-be77-d82cbede8a52",
+  "name": "Bob",
+  "description": "Just Bob.",
+  "namespace": "bob",
+  "macAddress": "E5-E5-B9-5C-45-10",
+  "dataRouterAndPreprocessorBaseURL": "http://localhost:7777/api",
+  "edgeAnalyticsEngineBaseURL": "http://localhost:9999/api",
+  "location": {
+    "virtualLocation": "Bob"
+  }
+}
