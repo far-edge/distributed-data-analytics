@@ -1,0 +1,17 @@
+.ui.container.data-kinds .ui.container {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.ui.container.data-kinds .ReactTable .h-name,
+.ui.container.data-kinds .ReactTable .h-description,
+.ui.container.data-kinds .ReactTable .h-model-type,
+.ui.container.data-kinds .ReactTable .h-format,
+.ui.container.data-kinds .ReactTable .h-quantity-kind {
+  text-align: left;
+  color: var(--blue);
+}
+
+.ui.container.data-kinds .ReactTable .c-actions .ui.button {
+  padding: 0.5em;
+}

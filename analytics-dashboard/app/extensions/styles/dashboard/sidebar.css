@@ -1,0 +1,21 @@
+.dashboard .ui.vertical.menu.side {
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 0;
+}
+
+.dashboard .ui.vertical.menu.side .item a {
+  color: var(--gray);
+}
+
+.dashboard .ui.vertical.menu.side .item.active a {
+  color: var(--blue);
+}
+
+.dashboard .side .logo {
+  width: 80%;
+  padding-bottom: 30px;
+}

@@ -1,0 +1,17 @@
+.ui.container.analytics-processor-definitions .ui.container {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.ui.container.analytics-processor-definitions .ReactTable .h-name,
+.ui.container.analytics-processor-definitions .ReactTable .h-description,
+.ui.container.analytics-processor-definitions .ReactTable .h-processor-type,
+.ui.container.analytics-processor-definitions .ReactTable .h-version,
+.ui.container.analytics-processor-definitions .ReactTable .h-parameters {
+  text-align: left;
+  color: var(--blue);
+}
+
+.ui.container.analytics-processor-definitions .ReactTable .c-actions .ui.button {
+  padding: 0.5em;
+}

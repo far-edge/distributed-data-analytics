@@ -1,0 +1,21 @@
+.ui.container.analytics-instances .ui.container {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.ui.container.analytics-instances .ReactTable .h-name,
+.ui.container.analytics-instances .ReactTable .h-description,
+.ui.container.analytics-instances .ReactTable .h-edge-gateway,
+.ui.container.analytics-instances .ReactTable .h-state,
+.ui.container.analytics-instances .ReactTable .h-number-of-analytics-processors {
+  text-align: left;
+  color: var(--blue);
+}
+
+.ui.container.analytics-instances .ReactTable .c-number-of-analytics-processors {
+  text-align: center;
+}
+
+.ui.container.analytics-instances .ReactTable .c-actions .ui.button {
+  padding: 0.5em;
+}

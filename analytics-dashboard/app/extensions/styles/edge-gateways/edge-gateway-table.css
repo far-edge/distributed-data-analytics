@@ -1,0 +1,16 @@
+.ui.container.edge-gateways .ui.container {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.ui.container.edge-gateways .ReactTable .h-name,
+.ui.container.edge-gateways .ReactTable .h-description,
+.ui.container.edge-gateways .ReactTable .h-namespace,
+.ui.container.edge-gateways .ReactTable .h-components {
+  text-align: left;
+  color: var(--blue);
+}
+
+.ui.container.edge-gateways .ReactTable .c-actions .ui.button {
+  padding: 0.5em;
+}

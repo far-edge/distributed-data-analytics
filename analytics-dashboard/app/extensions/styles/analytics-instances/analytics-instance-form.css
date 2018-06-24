@@ -1,0 +1,32 @@
+.analytics-instance-form .ui.form {
+  width: 100%;
+  padding: 20px;
+}
+
+.analytics-instance-form .actions {
+  padding-right: 0;
+}
+
+.analytics-instance-form .ui.form .field > label {
+  color: var(--black);
+}
+
+.analytics-instance-form .ui.segment.analytics-processors .title {
+  color: var(--blue);
+  display: block;
+  font-weight: 700;
+  padding: 20px 0;
+}
+
+.analytics-instance-form .ui.segment.analytics-processors .subtitle {
+  color: var(--blue);
+  font-weight: 700;
+  padding: 20px 0;
+  display: inline-block;
+}
+
+.analytics-instance-form .ui.segment.analytics-processors .delete-analytics-processor {
+  float: right;
+  padding-top: 20px;
+  cursor: pointer;
+}

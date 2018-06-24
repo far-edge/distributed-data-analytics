@@ -1,0 +1,12 @@
+.data-source-definition-form .ui.form {
+  width: 100%;
+  padding: 20px;
+}
+
+.data-source-definition-form .actions {
+  padding-right: 0;
+}
+
+.data-source-definition-form .ui.form .field > label {
+  color: var(--black);
+}

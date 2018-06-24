@@ -1,0 +1,17 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "property-no-unknown": [ true, {
+      "ignoreProperties": [
+        "composes"
+      ],
+    }],
+    "color-hex-length": "long",
+    "color-no-hex": true,
+    "comment-whitespace-inside": null,
+    "indentation": 2,
+    "length-zero-no-unit": null,
+    "max-line-length": 120,
+    "string-quotes": "single"
+  }
+}

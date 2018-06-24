@@ -1,0 +1,81 @@
+.ReactTable {
+  border: none;
+  width: 100%;
+  max-height: 500px;
+}
+
+.ReactTable .rt-thead {
+  border-style: solid;
+  border-width: 1px 0px;
+  font-weight: 700;
+}
+
+.ReactTable .rt-thead .rt-th {
+  padding: 5px 10px;
+  text-align: left;
+}
+
+.ReactTable .rt-noData {
+  position: initial;
+  transform: none;
+  transition: none;
+  z-index: 0;
+  background: none;
+  color: var(--black);
+  padding: 20px 0;
+}
+
+.ReactTable .rt-thead.-header {
+  box-shadow: none;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc {
+  box-shadow: inset 0 3px 0 0 var(--blue);
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc {
+  box-shadow: inset 0 -3px 0 0 var(--blue);
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc,
+.ReactTable .rt-thead .rt-th.-sort-desc,
+.ReactTable .rt-thead .rt-th.-cursor-pointer {
+  outline: none;
+}
+
+.ReactTable .rt-thead .rt-th div {
+  display: inline-block;
+}
+
+.ReactTable .rt-tbody {
+  background-color: var(--white);
+  margin-top: 10px;
+}
+
+.ReactTable .rt-tbody::-webkit-scrollbar {
+  width: 5px;
+}
+
+.ReactTable .rt-tbody::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+}
+
+.ReactTable .rt-tbody .rt-tr-group {
+  border-collapse: collapse;
+  border-bottom: 0;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  padding: 5px 10px;
+  white-space: normal;
+  text-overflow: clip;
+}
+
+.ReactTable .rt-tbody .rt-tr-group .rt-tr {
+  border-bottom: 1px solid var(--blue);
+  border-collapse: collapse;
+}
+
+.ReactTable .rt-tbody .rt-tr-group .rt-tr.-padRow {
+  border: none;
+}

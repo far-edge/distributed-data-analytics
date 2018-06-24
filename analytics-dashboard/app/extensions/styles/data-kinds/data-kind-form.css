@@ -1,0 +1,12 @@
+.data-kind-form .ui.form {
+  width: 100%;
+  padding: 20px;
+}
+
+.data-kind-form .actions {
+  padding-right: 0;
+}
+
+.data-kind-form .ui.form .field > label {
+  color: var(--black);
+}

@@ -1,0 +1,19 @@
+.data-source-form .ui.form {
+  width: 100%;
+  padding: 20px;
+}
+
+.data-source-form .actions {
+  padding-right: 0;
+}
+
+.data-source-form .ui.form .field > label {
+  color: var(--black);
+}
+
+.data-source-form .ui.segment.parameters .title {
+  color: var(--blue);
+  display: block;
+  font-weight: 700;
+  padding: 20px 0;
+}

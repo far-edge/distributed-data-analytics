@@ -1,0 +1,27 @@
+.ui.container.overview {
+  padding: 50px 20px 20px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.ui.container.overview .ui.label {
+  margin-bottom: 10px;
+}
+
+.ui.container.overview .ui.cards > .card > .extra.urls .ui.label {
+  font-weight: 400;
+}
+
+.ui.container.overview .ui.cards > .card > .extra.statistics .ui.label {
+  background-color: var(--blue);
+  color: var(--white);
+  font-weight: 400;
+}
+
+.ui.container.overview .ui.cards > .card .header i.icon {
+  font-weight: 700;
+  font-size: 1.28571429em;
+  margin-top: -0.21425em;
+  line-height: 1.28571429em;
+}

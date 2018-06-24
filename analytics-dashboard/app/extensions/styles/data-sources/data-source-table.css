@@ -1,0 +1,17 @@
+.ui.container.data-sources .ui.container {
+  margin: 0 !important;
+  width: 100%;
+}
+
+.ui.container.data-sources .ReactTable .h-name,
+.ui.container.data-sources .ReactTable .h-description,
+.ui.container.data-sources .ReactTable .h-data-source-definition,
+.ui.container.data-sources .ReactTable .h-edge-gateway,
+.ui.container.data-sources .ReactTable .h-parameters {
+  text-align: left;
+  color: var(--blue);
+}
+
+.ui.container.data-sources .ReactTable .c-actions .ui.button {
+  padding: 0.5em;
+}

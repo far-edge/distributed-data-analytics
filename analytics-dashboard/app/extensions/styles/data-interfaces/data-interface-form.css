@@ -1,0 +1,35 @@
+.data-interface-form .ui.form {
+  width: 100%;
+  padding: 20px;
+}
+
+.data-interface-form .actions {
+  padding-right: 0;
+}
+
+.data-interface-form .ui.form .field > label {
+  color: var(--black);
+}
+
+.data-interface-form .ui.segment.parameters .title {
+  color: var(--blue);
+  display: block;
+  font-weight: 700;
+  padding: 20px 0;
+}
+
+.data-interface-form .ui.segment.parameters .parameter i.icon {
+  align-self: center;
+  color: var(--blue);
+  font-size: 1em;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.data-interface-form .ui.segment.parameters .parameter.first i.icon {
+  padding-top: 10px;
+}
+
+.data-interface-form .ui.segment.parameters .ui.container.delete-parameter .ui.button {
+  padding: 0.5em;
+}
