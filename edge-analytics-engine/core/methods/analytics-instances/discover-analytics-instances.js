@@ -11,8 +11,7 @@ const discoverAnalyticsInstances = (input) => {
     // Find the analytics manifests that match the given criteria.
     return AnalyticsManifest.find({
       ...(input.id ? { _id: input.id } : { }),
-      ...(input.name ? { name: input.name } : { }),
-      ...(input.description ? { description: input.description } : { }),
+      ...(input.name ? { name: input.name } : { })
     });
   }).then((analyticsManifests) => {
     // Get the state for each one of them.

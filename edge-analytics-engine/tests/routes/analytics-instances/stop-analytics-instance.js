@@ -23,7 +23,7 @@ const testStopAnalyticsInstance = () => {
         return null;
       });
     });
-    it('should start an analytics instance', () => {
+    it('should stop an analytics instance', () => {
       const p = Promise.try(() => {
         return analyticsInstanceHelper.createAnalyticsInstance({});
       }).then((analyticsInstance) => {

@@ -16,7 +16,6 @@ const router = express.Router({ mergeParams: true });
  *
  * @apiParam {String} name The name of the analytics instance.
  * @apiParam {String} [description] The description of the analytics instance.
- * @apiParam {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiParam {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiParam {String} [analyticsProcessors.apm.name] The name of the analytics processor.
  * @apiParam {String} [analyticsProcessors.apm.description] The description of the analytics processor.
@@ -50,7 +49,6 @@ const router = express.Router({ mergeParams: true });
  * @apiSuccess {String} id The ID of the analytics instance.
  * @apiSuccess {String} name The name of the analytics instance.
  * @apiSuccess {String} [description] The description of the analytics instance.
- * @apiSuccess {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsProcessors.apm.id The ID of the analytics processor.
  * @apiSuccess {String} [analyticsProcessors.apm.name] The name of the analytics processor.
@@ -117,7 +115,6 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  * @apiParam {String} id The ID of the analytics instance.
  * @apiParam {String} name The name of the analytics instance.
  * @apiParam {String} [description] The description of the analytics instance.
- * @apiParam {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiParam {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiParam {String} [analyticsProcessors.apm.name] The name of the analytics processor.
  * @apiParam {String} [analyticsProcessors.apm.description] The description of the analytics processor.
@@ -150,7 +147,6 @@ router.route('/').post(validate(blueprint.createAnalyticsInstance),
  * @apiSuccess {String} id The ID of the analytics instance.
  * @apiSuccess {String} name The name of the analytics instance.
  * @apiSuccess {String} [description] The description of the analytics instance.
- * @apiSuccess {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsProcessors The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsProcessors.apm.id The ID of the analytics processor.
  * @apiSuccess {String} [analyticsProcessors.apm.name] The name of the analytics processor.
@@ -216,7 +212,7 @@ router.route('/:id/specification').put(validate(blueprint.updateAnalyticsInstanc
  * @apiDescription Destroys an analytics instance.
  * @apiGroup ANALYTICS INSTANCES
  *
- * @apiSuccess {String} id The ID of the analytics instance.
+ * @apiParam {String} id The ID of the analytics instance.
  *
  * @apiSuccessExample Success
  *   HTTP/1.1 204 No Content
@@ -248,7 +244,6 @@ router.route('/:id').delete(validate(blueprint.destroyAnalyticsInstance),
  * @apiSuccess {Object} specification The specification of the analytics instance.
  * @apiSuccess {String} specification.name The name of the analytics instance.
  * @apiSuccess {String} [specification.description] The description of the analytics instance.
- * @apiSuccess {String} [specification.edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} specification.analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} specification.analyticsProcessors.apm.id The ID of the analytics processor.
  * @apiSuccess {String} [specification.analyticsProcessors.apm.name] The name of the analytics processor.
@@ -311,7 +306,6 @@ router.route('/:id').get(validate(blueprint.getAnalyticsInstance),
  * @apiSuccess {String} id The ID of the analytics instance.
  * @apiSuccess {String} name The name of the analytics instance.
  * @apiSuccess {String} [description] The description of the analytics instance.
- * @apiSuccess {String} [edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsProcessors.apm.id The ID of the analytics processor.
  * @apiSuccess {String} [analyticsProcessors.apm.name] The name of the analytics processor.
@@ -398,8 +392,6 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  *
  * @apiParam {String} [id] The ID of the analytics instance.
  * @apiParam {String} [name] The name of the analytics instance.
- * @apiParam {String} [description] The description of the analytics instance.
- * @apiParam {String} [state] The state of the analytics instance (FAILED, RUNNING, STOPPED).
  * @apiParamExample {json} Request
  *   {
  *   }
@@ -408,7 +400,6 @@ router.route('/:id/state').get(validate(blueprint.getAnalyticsInstanceState),
  * @apiSuccess {Object} analyticsInstances.specification The specification of the analytics instance.
  * @apiSuccess {String} analyticsInstances.specification.name The name of the analytics instance.
  * @apiSuccess {String} [analyticsInstances.specification.description] The description of the analytics instance.
- * @apiSuccess {String} [analyticsInstances.specification.edgeGatewayReferenceID] The edge gateway that the analytics instance runs on.
  * @apiSuccess {Object[]} analyticsInstances.specification.analyticsProcessors.apm The analytics processors in the analytics instance.
  * @apiSuccess {String} analyticsInstances.specification.analyticsProcessors.apm.id The ID of the analytics processor.
  * @apiSuccess {String} [analyticsInstances.specification.analyticsProcessors.apm.name] The name of the analytics processor.
@@ -471,7 +462,7 @@ router.route('/discover').post(validate(blueprint.discoverAnalyticsInstances),
  * @apiDescription Starts an analytics instance.
  * @apiGroup ANALYTICS INSTANCES
  *
- * @apiSuccess {String} id The ID of the analytics instance.
+ * @apiParam {String} id The ID of the analytics instance.
  *
  * @apiSuccessExample Success
  *   HTTP/1.1 204 No Content
@@ -497,7 +488,7 @@ router.route('/:id/start').post(validate(blueprint.startAnalyticsInstance),
  * @apiDescription Stops an analytics instance.
  * @apiGroup ANALYTICS INSTANCES
  *
- * @apiSuccess {String} id The ID of the analytics instance.
+ * @apiParam {String} id The ID of the analytics instance.
  *
  * @apiSuccessExample Success
  *   HTTP/1.1 204 No Content

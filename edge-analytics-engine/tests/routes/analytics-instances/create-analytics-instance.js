@@ -45,8 +45,7 @@ const testCreateAnalyticsInstance = () => {
             ]
           }
         },
-        ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
-        ...(faker.random.boolean() ? { edgeGatewayReferenceID: faker.random.uuid() } : { })
+        ...(faker.random.boolean() ? { description: faker.random.words(10) } : { })
       };
       const analyticsProcessorDefinitionId =
         data.analyticsProcessors.apm[0].analyticsProcessorDefinitionReferenceID;

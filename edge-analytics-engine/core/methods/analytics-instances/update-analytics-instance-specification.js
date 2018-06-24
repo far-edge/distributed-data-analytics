@@ -32,7 +32,6 @@ const updateAnalyticsInstanceSpecification = (input) => {
     // Change the analytics manifest.
     analyticsManifest.name = input.name;
     analyticsManifest.description = input.description;
-    analyticsManifest.edgeGatewayReferenceID = input.edgeGatewayReferenceID;
     analyticsManifest.analyticsProcessors = input.analyticsProcessors;
     // Validate the analytics manifest.
     return common.validateAnalyticsManifest(analyticsManifest);
@@ -40,7 +39,7 @@ const updateAnalyticsInstanceSpecification = (input) => {
     // Save the analytics manifest.
     return analyticsManifest.save();
   }).then((analyticsManifest) => {
-    logger.debug(`Updated analytics instance ${ input.id }.`);
+    logger.debug(`Updated specification of analytics instance ${ input.id }.`);
     return analyticsManifest;
   }).catch((error) => {
     logger.error(`Failed to update specification of analytics instance ${ input.id }.`, error);

@@ -22,11 +22,11 @@ describe('Analytics instances', () => {
   // Test the analytics instance retrieval.
   testGetAnalyticsInstance();
 
-  // Test the analytics instance state retrieval.
-  testGetAnalyticsInstanceState();
-
   // Test the analytics instance specification retrieval.
   testGetAnalyticsInstanceSpecification();
+
+  // Test the analytics instance state retrieval.
+  testGetAnalyticsInstanceState();
 
   // Test the analytics instance start.
   testStartAnalyticsInstance();

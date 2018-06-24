@@ -42,7 +42,6 @@ const createAnalyticsInstance = (overrides) => {
       }
     },
     ...(faker.random.boolean() ? { description: faker.random.words(10) } : { }),
-    ...(faker.random.boolean() ? { edgeGatewayReferenceID: faker.random.uuid() } : { }),
     ...overrides
   });
   return Promise.try(() => {

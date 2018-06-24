@@ -140,12 +140,6 @@ const AnalyticsManifestSchema = new mongoose.Schema({
     required: false
   },
 
-  // The edge gateway that the analytics instance runs on.
-  edgeGatewayReferenceID: {
-    type: String,
-    required: false
-  },
-
   // The analytics processors in the analytics instance.
   analyticsProcessors: {
     type: AnalyticsProcessorManifestsSchema,

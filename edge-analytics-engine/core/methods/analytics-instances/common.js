@@ -52,7 +52,7 @@ const validateAnalyticsManifest = (analyticsManifest) => {
       });
     });
   }).then(() => {
-    // All data sinks must exist.
+    // The data sink must exist.
     return Promise.each(analyticsManifest.analyticsProcessors.apm.map((p) => {
       return p.dataSink.dataSourceManifestReferenceID;
     }), (id) => {

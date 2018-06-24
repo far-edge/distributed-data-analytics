@@ -1,4 +1,3 @@
-const State = require('../core/models/state');
 const validations = require('../core/common/validations');
 
 const _parameter = validations.object().keys({
@@ -28,7 +27,6 @@ const createAnalyticsInstance = {
   body: {
     name: validations.string().required(),
     description: validations.string().allow('').allow(null).optional(),
-    edgeGatewayReferenceID: validations.string().allow('').allow(null).optional(),
     analyticsProcessors: validations.object().keys({
       apm: validations.array().items(_processor).required()
     }).required()
@@ -46,9 +44,7 @@ const destroyAnalyticsInstance = {
 const discoverAnalyticsInstances = {
   body: {
     id: validations.id().allow('').allow(null).optional(),
-    name: validations.string().allow('').allow(null).optional(),
-    description: validations.string().allow('').allow(null).optional(),
-    state: validations.string().valid(State.ALL).allow('').allow(null).optional()
+    name: validations.string().allow('').allow(null).optional()
   }
 };
 
@@ -95,7 +91,6 @@ const updateAnalyticsInstanceSpecification = {
   body: {
     name: validations.string().required(),
     description: validations.string().allow('').allow(null).optional(),
-    edgeGatewayReferenceID: validations.string().allow('').allow(null).optional(),
     analyticsProcessors: validations.object().keys({
       apm: validations.array().items(_processor).required()
     }).required()
