@@ -18,8 +18,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const baseConfig = {
   // Configure the directory to resolve everything.
   context: paths.app,
-  // Configure the mode.
-  mode: process.env.NODE_ENV,
   // Configure how to treat the different types of modules.
   module: {
     rules: [

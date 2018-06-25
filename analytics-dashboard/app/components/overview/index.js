@@ -24,7 +24,7 @@ class Overview extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the edge gateways.');
     send({
-      url: 'edge-gateways/discover',
+      url: '/edge-gateways/discover',
       method: 'POST',
       data: { }
     }).then((response) => {
