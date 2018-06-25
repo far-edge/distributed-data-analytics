@@ -219,7 +219,7 @@ const startAnalyticsInstance = (aiid) => {
       throw new errors.BadRequestError('ANALYTICS_INSTANCE_RUNNING');
     }
     aicb.processors = analyticsManifest.analyticsProcessors.apm.reduce((acc, apm) => {
-      return acc[apm._id] = { process: null, state: State.STOPPED };
+      return { ...acc, [ apm._id ]: { process: null, state: State.STOPPED } };
     }, {});
     aicb.state = State.STOPPED;
     // Start all analytics processors.
