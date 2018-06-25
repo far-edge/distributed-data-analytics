@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
+const rerrors = require('request-promise/errors');
 
 const AIM = require('../../workers/analytics-instance-manager');
 const EdgeGateway = require('../../models/edge-gateway');
@@ -36,7 +37,17 @@ const _stopLocalAnalyticsInstance = (input) => {
     // Forward the request to the edge gateway.
     return request({
       method: 'POST',
-      uri: `${ edgeGateway.edgeAnalyticsEngineBaseURL }/analytics-instances/${ input.id }/stop`
+      uri: `${ edgeGateway.edgeAnalyticsEngineBaseURL }/analytics-instances/${ input.id }/stop`,
+      resolveWithFullResponse: true,
+      simple: true
+    }).catch(rerrors.StatusCodeError, (reason) => {
+      if (reason.statusCode === 400) {
+        throw new errors.BadRequestError(reason.response.body.error);
+      }
+      if (reason.statusCode === 404) {
+        throw new errors.NotFoundError(reason.response.body.error);
+      }
+      throw new Error(reason.response.body.error);
     });
   }).then((_response) => {
     logger.debug(`Stopped analytics instance ${ input.id } in edge gateway ${ input.edgeGatewayReferenceID } local scope.`);

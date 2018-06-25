@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
+const rerrors = require('request-promise/errors');
 
 const AIM = require('../../workers/analytics-instance-manager');
 const AnalyticsManifest = require('../../models/analytics-manifest');
@@ -66,11 +67,21 @@ const _updateLocalAnalyticsInstanceSpecification = (input) => {
       method: 'PUT',
       uri: `${ edgeGateway.edgeAnalyticsEngineBaseURL }/analytics-instances/${ input.id }/specification`,
       body: input,
-      json: true
+      json: true,
+      resolveWithFullResponse: true,
+      simple: true
+    }).catch(rerrors.StatusCodeError, (reason) => {
+      if (reason.statusCode === 400) {
+        throw new errors.BadRequestError(reason.response.body.error);
+      }
+      if (reason.statusCode === 404) {
+        throw new errors.NotFoundError(reason.response.body.error);
+      }
+      throw new Error(reason.response.body.error);
     });
   }).then((response) => {
     // Fill in the edge gateway.
-    return { ...response, edgeGatewayReferenceID: input.edgeGatewayReferenceID };
+    return { ...response.body, edgeGatewayReferenceID: input.edgeGatewayReferenceID };
   }).then((analyticsManifest) => {
     logger.debug(`Updated analytics instance ${ input.id } in edge gateway ${ input.edgeGatewayReferenceID } local scope.`);
     return analyticsManifest;

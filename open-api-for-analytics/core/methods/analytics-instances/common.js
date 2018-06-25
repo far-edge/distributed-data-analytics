@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 
 const AnalyticsManifest = require('../../models/analytics-manifest');
 const chisels = require('../../common/chisels');
-const DataSourceManifest = require('../../models/data-source-manifest');
+const dataSources = require('../../methods/data-sources');
 const errors = require('../../common/errors');
 const logger = require('../../common/loggers').get('ANALYTICS-INSTANCES');
 const modelDiscoverer = require('../../workers/model-discoverer');
@@ -44,8 +44,8 @@ const validateAnalyticsManifest = (analyticsManifest) => {
     }).reduce((acc, ids) => {
       return acc.concat(ids);
     }, []), (id) => {
-      return DataSourceManifest.findById(id).then((dataSourceManifest) => {
-        if (!dataSourceManifest) {
+      return dataSources.discoverDataSources({ id }).then(({ dataSources }) => {
+        if (!dataSources || !dataSources.length) {
           logger.error(`Data source ${ id } does not exist.`);
           throw new errors.BadRequestError('DATA_SOURCE_NOT_FOUND');
         }
@@ -56,8 +56,8 @@ const validateAnalyticsManifest = (analyticsManifest) => {
     return Promise.each(analyticsManifest.analyticsProcessors.apm.map((p) => {
       return p.dataSink.dataSourceManifestReferenceID;
     }), (id) => {
-      return DataSourceManifest.findById(id).then((dataSourceManifest) => {
-        if (!dataSourceManifest) {
+      return dataSources.discoverDataSources({ id }).then(({ dataSources }) => {
+        if (!dataSources || !dataSources.length) {
           logger.error(`Data sink ${ id } does not exist.`);
           throw new errors.BadRequestError('DATA_SINK_NOT_FOUND');
         }

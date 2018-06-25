@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
+const rerrors = require('request-promise/errors');
 
 const AIM = require('../../workers/analytics-instance-manager');
 const AnalyticsManifest = require('../../models/analytics-manifest');
@@ -59,10 +60,20 @@ const _discoverLocalAnalyticsInstances = (input) => {
           ...(input.id ? { _id: input.id } : { }),
           ...(input.name ? { name: input.name } : { })
         },
-        json: true
+        json: true,
+        resolveWithFullResponse: true,
+        simple: true
+      }).catch(rerrors.StatusCodeError, (reason) => {
+        if (reason.statusCode === 400) {
+          throw new errors.BadRequestError(reason.response.body.error);
+        }
+        if (reason.statusCode === 404) {
+          throw new errors.NotFoundError(reason.response.body.error);
+        }
+        throw new Error(reason.response.body.error);
       }).then((response) => {
         // Fill in the edge gateway.
-        return response.analyticsInstances.map((analyticsInstance) => {
+        return response.body.analyticsInstances.map((analyticsInstance) => {
           return { ...analyticsInstance, edgeGatewayReferenceID: edgeGateway._id };
         });
       }).then((analyticsInstances) => {

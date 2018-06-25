@@ -3,7 +3,9 @@ const Promise = require('bluebird');
 
 const AnalyticsManifest = require('../models/analytics-manifest');
 const DataSourceManifest = require('../models/data-source-manifest');
+const dataSources = require('../methods/data-sources');
 const errors = require('../common/errors');
+const { first } = require('../common/chisels');
 const logger = require('../common/loggers').get('ANALYTICS-RUNTIME');
 const modelDiscoverer = require('./model-discoverer');
 const State = require('../models/state');
@@ -12,6 +14,24 @@ const State = require('../models/state');
 // The table maps analytics instance identification numbers (AIIDs) to analytics instance control
 // blocks (AICBs).
 const _ait = { };
+
+// Finds a data source in the global or in any local scope.
+// NOTE: We (wrongly) assume that a data source with the given ID can only exist in at most one
+// scopes, which - at least in the currently implementation - is not correct.
+const _findDataSource = (id) => {
+  return Promise.try(() => {
+    // Look for it in the global scope.
+    return DataSourceManifest.findById(id);
+  }).then((dataSourceManifest) => {
+    if (dataSourceManifest) {
+      return dataSourceManifest;
+    }
+    // Look for it in any local scope.
+    return dataSources.discoverDataSources({ id }).then((dataSourceManifests) => {
+      return first(dataSourceManifests);
+    });
+  });
+};
 
 // Starts the analytics processor with the given manifest that is part of tha analytics instance
 // with the given AIID.
@@ -26,11 +46,9 @@ const _startAnalyticsProcessor = (aiid, analyticsProcessorManifest) => {
     analyticsProcessorManifest.analyticsProcessorDefinitionReferenceID;
   return Promise.all([
     // Find the data source manifests.
-    Promise.map(dataSourceIds, (id) => {
-      return DataSourceManifest.findById(id);
-    }),
+    Promise.map(dataSourceIds, _findDataSource),
     // Find the data sink manifest.
-    DataSourceManifest.findById(dataSinkId),
+    _findDataSource(dataSinkId),
     // Discover the analytics processor definition.
     modelDiscoverer.discoverAnalyticsProcessorDefinitions({
       id: analyticsProcessorDefinitionId

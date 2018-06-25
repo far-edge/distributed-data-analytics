@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
+const rerrors = require('request-promise/errors');
 
 const DataSourceManifest = require('../../models/data-source-manifest');
 const EdgeGateway = require('../../models/edge-gateway');
@@ -44,7 +45,14 @@ const _unregisterLocalDataSource = (input) => {
     // Forward the request to the edge gateway.
     return request({
       method: 'DELETE',
-      uri: `${ edgeGateway.dataRouterAndPreprocessorBaseURL }/data-sources/${ input.id }`
+      uri: `${ edgeGateway.dataRouterAndPreprocessorBaseURL }/data-sources/${ input.id }`,
+      resolveWithFullResponse: true,
+      simple: true
+    }).catch(rerrors.StatusCodeError, (reason) => {
+      if (reason.statusCode === 404) {
+        throw new errors.NotFoundError(reason.response.body.error);
+      }
+      throw new Error(reason.response.body.error);
     });
   }).then((_response) => {
     logger.debug(`Unregistered data source ${ input.id } in edge gateway ${ input.edgeGatewayReferenceID } local scope.`);

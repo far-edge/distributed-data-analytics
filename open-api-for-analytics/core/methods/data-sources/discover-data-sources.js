@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
+const rerrors = require('request-promise/errors');
 
 const DataSourceManifest = require('../../models/data-source-manifest');
 const EdgeGateway = require('../../models/edge-gateway');
@@ -57,10 +58,17 @@ const _discoverLocalDataSources = (input) => {
             dataSourceDefinitionReferenceID: input.dataSourceDefinitionReferenceID
           } : { })
         },
-        json: true
+        json: true,
+        resolveWithFullResponse: true,
+        simple: true
+      }).catch(rerrors.StatusCodeError, (reason) => {
+        if (reason.statusCode === 400) {
+          throw new errors.BadRequestError(reason.response.body.error);
+        }
+        throw new Error(reason.response.body.error);
       }).then((response) => {
         // Fill in the edge gateway.
-        return response.dataSources.map((dataSourceManifest) => {
+        return response.body.dataSources.map((dataSourceManifest) => {
           return { ...dataSourceManifest, edgeGatewayReferenceID: edgeGateway._id };
         });
       }).then((dataSourceManifests) => {

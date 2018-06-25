@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
+const rerrors = require('request-promise/errors');
 
 const common = require('./common');
 const DataSourceManifest = require('../../models/data-source-manifest');
@@ -44,11 +45,21 @@ const _registerLocalDataSource = (input) => {
       method: 'POST',
       uri: `${ edgeGateway.dataRouterAndPreprocessorBaseURL }/data-sources`,
       body: input,
-      json: true
+      json: true,
+      resolveWithFullResponse: true,
+      simple: true
+    }).catch(rerrors.StatusCodeError, (reason) => {
+      if (reason.statusCode === 400) {
+        throw new errors.BadRequestError(reason.response.body.error);
+      }
+      if (reason.statusCode === 404) {
+        throw new errors.NotFoundError(reason.response.body.error);
+      }
+      throw new Error(reason.response.body.error);
     });
   }).then((response) => {
     // Fill in the edge gateway.
-    return { ...response, edgeGatewayReferenceID: input.edgeGatewayReferenceID };
+    return { ...response.body, edgeGatewayReferenceID: input.edgeGatewayReferenceID };
   }).then((dataSourceManifest) => {
     logger.debug(`Registered data source ${ dataSourceManifest._id } in edge gateway ${ input.edgeGatewayReferenceID } local scope.`);
     return dataSourceManifest;
