@@ -60,7 +60,7 @@ class AnalyticsInstances extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the analytics instances.');
     send({
-      url: '/analytics-instances/discover',
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/discover`,
       method: 'POST',
       data: { }
     }).then((response) => {
@@ -94,7 +94,7 @@ class AnalyticsInstances extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the data sources.');
     send({
-      url: '/data-sources/discover',
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/data-sources/discover`,
       method: 'POST',
       data: { }
     }).then((response) => {
@@ -111,7 +111,7 @@ class AnalyticsInstances extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the edge gateways.');
     send({
-      url: 'edge-gateways/discover',
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/edge-gateways/discover`,
       method: 'POST',
       data: { }
     }).then((response) => {
@@ -241,7 +241,8 @@ class AnalyticsInstances extends Component {
     const query = analyticsInstance.edgeGatewayReferenceID ? `?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` : '';
     send({
       method: analyticsInstance.id ? 'PUT' : 'POST',
-      url: analyticsInstance.id ? `/analytics-instances/${ analyticsInstance.id }/specification${ query }` : `/analytics-instances${ query }`,
+      url: analyticsInstance.id ? `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }/specification${ query }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances${ query }`,
       data
     }).then((_data) => {
       this.fetchAnalyticsInstances();
@@ -260,8 +261,8 @@ class AnalyticsInstances extends Component {
     send({
       method: 'DELETE',
       url: analyticsInstance.edgeGatewayReferenceID ?
-        `/analytics-instances/${ analyticsInstance.id }?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` :
-        `/analytics-instances/${ analyticsInstance.id }`
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }`
     }).then((_data) => {
       this.fetchAnalyticsInstances();
     }).catch((error) => {
@@ -277,8 +278,8 @@ class AnalyticsInstances extends Component {
     send({
       method: 'POST',
       url: analyticsInstance.edgeGatewayReferenceID ?
-        `/analytics-instances/${ analyticsInstance.id }/start?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` :
-        `/analytics-instances/${ analyticsInstance.id }/start`
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }/start?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }/start`
     }).then((_data) => {
       this.fetchAnalyticsInstances();
     }).catch((error) => {
@@ -294,8 +295,8 @@ class AnalyticsInstances extends Component {
     send({
       method: 'POST',
       url: analyticsInstance.edgeGatewayReferenceID ?
-        `/analytics-instances/${ analyticsInstance.id }/stop?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` :
-        `/analytics-instances/${ analyticsInstance.id }/stop`
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }/stop?edgeGatewayReferenceID=${ analyticsInstance.edgeGatewayReferenceID }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/analytics-instances/${ analyticsInstance.id }/stop`
     }).then((_data) => {
       this.fetchAnalyticsInstances();
     }).catch((error) => {

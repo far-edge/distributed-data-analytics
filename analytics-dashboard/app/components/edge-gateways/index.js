@@ -42,7 +42,7 @@ class EdgeGateways extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the edge gateways.');
     send({
-      url: 'edge-gateways/discover',
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/edge-gateways/discover`,
       method: 'POST',
       data: { }
     }).then((response) => {
@@ -106,7 +106,8 @@ class EdgeGateways extends Component {
     console.log(edgeGateway.id ? 'Create an edge gateway.' : `Update the edge gateways ${ edgeGateway.id }.`);
     send({
       method: edgeGateway.id ? 'PUT' : 'POST',
-      url: edgeGateway.id ? `/edge-gateways/${ edgeGateway.id }` : '/edge-gateways',
+      url: edgeGateway.id ? `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/edge-gateways/${ edgeGateway.id }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/edge-gateways`,
       data: {
         ...edgeGateway
       }
@@ -126,7 +127,7 @@ class EdgeGateways extends Component {
     console.log(`Delete the edge gateway ${ edgeGateway.id }.`);
     send({
       method: 'DELETE',
-      url: `/edge-gateways/${ edgeGateway.id }`
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/edge-gateways/${ edgeGateway.id }`
     }).then((_data) => {
       this.fetchEdgeGateways();
     }).catch((error) => {

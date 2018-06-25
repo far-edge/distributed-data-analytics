@@ -80,7 +80,7 @@ class DataSources extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the data sources.');
     send({
-      url: '/data-sources/discover',
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/data-sources/discover`,
       method: 'POST',
       data: { }
     }).then((response) => {
@@ -97,7 +97,7 @@ class DataSources extends Component {
     // eslint-disable-next-line no-console
     console.log('Fetch the edge gateways.');
     send({
-      url: 'edge-gateways/discover',
+      url: `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/edge-gateways/discover`,
       method: 'POST',
       data: { }
     }).then((response) => {
@@ -156,7 +156,8 @@ class DataSources extends Component {
     send({
       method: 'POST',
       url: dataSource.edgeGatewayReferenceID ?
-        `/data-sources?edgeGatewayReferenceID=${ dataSource.edgeGatewayReferenceID }` : '/data-sources',
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/data-sources?edgeGatewayReferenceID=${ dataSource.edgeGatewayReferenceID }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/data-sources`,
       data
     }).then((_data) => {
       this.fetchDataSources();
@@ -174,8 +175,8 @@ class DataSources extends Component {
     send({
       method: 'DELETE',
       url: dataSource.edgeGatewayReferenceID ?
-        `/data-sources/${ dataSource.id }?edgeGatewayReferenceID=${ dataSource.edgeGatewayReferenceID }` :
-        `/data-sources/${ dataSource.id }`
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/data-sources/${ dataSource.id }?edgeGatewayReferenceID=${ dataSource.edgeGatewayReferenceID }` :
+        `${ process.env.OPEN_API_FOR_ANALYTICS_BASE_URL }/data-sources/${ dataSource.id }`
     }).then((_data) => {
       this.fetchDataSources();
     }).catch((error) => {
