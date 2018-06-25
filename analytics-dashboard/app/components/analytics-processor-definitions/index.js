@@ -53,7 +53,7 @@ class AnalyticsProcessorDefinitions extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the analytics processor definitions.', error);
-      messages.error(tr('FAILED_TO_FETCH_ANALYTICS_PROCESSOR_DEFINITIONS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_ANALYTICS_PROCESSOR_DEFINITIONS') } ${ tr(error.message) }`);
     });
   }
 
@@ -142,7 +142,7 @@ class AnalyticsProcessorDefinitions extends Component {
       // eslint-disable-next-line no-console
       console.error(id ? `Failed to update the analytics processor definition ${ id }.` :
         'Failed to create an analytics processor definition.', error);
-      messages.error(tr('FAILED_TO_SAVE_ANALYTICS_PROCESSOR_DEFINITION', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_ANALYTICS_PROCESSOR_DEFINITION') } ${ tr(error.message) }`);
     });
   }
 
@@ -158,7 +158,7 @@ class AnalyticsProcessorDefinitions extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to delete the analytics processor definition ${ id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_DATA_INTERFACE', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_DATA_INTERFACE') } ${ tr(error.message) }`);
     });
   }
 

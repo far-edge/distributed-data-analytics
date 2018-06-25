@@ -51,7 +51,7 @@ class EdgeGateways extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the edge gateways.', error);
-      messages.error(tr('FAILED_TO_FETCH_EDGE_GATEWAYS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_EDGE_GATEWAYS') } ${ tr(error.message) }`);
     });
   }
 
@@ -117,7 +117,7 @@ class EdgeGateways extends Component {
       // eslint-disable-next-line no-console
       console.error(edgeGateway.id ? `Failed to update the edge gateway ${ edgeGateway.id }.` :
         'Failed to create an edge gateway.', error);
-      messages.error(tr('FAILED_TO_SAVE_EDGE_GATEWAY', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_EDGE_GATEWAY') } ${ tr(error.message) }`);
     });
   }
 
@@ -132,7 +132,7 @@ class EdgeGateways extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to delete the edge gateway ${ edgeGateway.id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_EDGE_GATEWAY', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_EDGE_GATEWAY') } ${ tr(error.message) }`);
     });
   }
 

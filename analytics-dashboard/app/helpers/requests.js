@@ -23,11 +23,9 @@ const send = ({ method, url, data, params, token }) => {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx.
-      console.error('Failed to send.', error);
-      throw new Error(error.response.data);
+      throw new Error(error.response.data.error);
     } else if (error.request) {
       // eslint-disable-next-line no-console
-      console.error('Failed to send.', error);
       // The request was made but no response was received.
       throw new Error('OOPS');
     } else {

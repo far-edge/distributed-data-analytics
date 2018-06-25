@@ -24,9 +24,15 @@ const DataSourceTable = (props) => {
   }, {
     id: 'edge-gateway',
     Header: tr('EDGE_GATEWAY'),
-    accessor: (dataSource) => {
+    Cell: (row) => {
+      const dataSource = row.original;
       const id = dataSource.edgeGatewayReferenceID;
-      return id ? first(props.edgeGateways.filter((eg) => { return eg.id === id; })).name : '';
+      const edgeGateway = id ? first(props.edgeGateways.filter((eg) => { return eg.id === id; })) : null;
+      return id ? (
+        <span>{ edgeGateway? edgeGateway.name : '' }</span>
+      ) : (
+        <Icon name='cloud' />
+      );
     },
     className: 'c-edge-gateway',
     headerClassName: 'h-edge-gateway'

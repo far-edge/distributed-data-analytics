@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Divider, Dropdown, Form, Grid, Icon, Input, Segment, TextArea } from 'semantic-ui-react';
+import { Button, Dropdown, Form, Icon, Input, Segment, TextArea } from 'semantic-ui-react';
 
 import AnalyticsProcessorForm from 'components/analytics-instances/analytics-processor-form';
 import { tr } from 'helpers/languages';

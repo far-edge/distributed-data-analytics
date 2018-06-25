@@ -55,7 +55,7 @@ class DataSources extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data interfaces.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_INTERFACES', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_INTERFACES') } ${ tr(error.message) }`);
     });
   }
 
@@ -72,7 +72,7 @@ class DataSources extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data source definitions.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_SOURCE_DEFINITIONS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_SOURCE_DEFINITIONS') } ${ tr(error.message) }`);
     });
   }
 
@@ -89,7 +89,7 @@ class DataSources extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data sources.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_SOURCES', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_SOURCES') } ${ tr(error.message) }`);
     });
   }
 
@@ -106,7 +106,7 @@ class DataSources extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the edge gateways.', error);
-      messages.error(tr('FAILED_TO_FETCH_EDGE_GATEWAYS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_EDGE_GATEWAYS') } ${ tr(error.message) }`);
     });
   }
 
@@ -164,7 +164,7 @@ class DataSources extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to register a data source.', error);
-      messages.error(tr('FAILED_TO_SAVE_DATA_SOURCE', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_DATA_SOURCE') } ${ tr(error.message) }`);
     });
   }
 
@@ -181,7 +181,7 @@ class DataSources extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to unregister the data source ${ dataSource.id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_DATA_SOURCE', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_DATA_SOURCE') } ${ tr(error.message) }`);
     });
   }
 

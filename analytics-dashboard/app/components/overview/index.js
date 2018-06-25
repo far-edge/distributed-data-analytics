@@ -33,7 +33,7 @@ class Overview extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the edge gateways.', error);
-      messages.error(tr('FAILED_TO_FETCH_EDGE_GATEWAYS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_EDGE_GATEWAYS') } ${ tr(error.message) }`);
     });
   }
 

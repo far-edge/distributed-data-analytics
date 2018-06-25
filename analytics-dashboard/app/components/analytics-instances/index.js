@@ -69,7 +69,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the analytics instances.', error);
-      messages.error(tr('FAILED_TO_FETCH_ANALYTICS_INSTANCES', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_ANALYTICS_INSTANCES') } ${ tr(error.message) }`);
     });
   }
 
@@ -86,7 +86,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the analytics processor definitions.', error);
-      messages.error(tr('FAILED_TO_FETCH_ANALYTICS_PROCESSOR_DEFINITIONS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_ANALYTICS_PROCESSOR_DEFINITIONS') } ${ tr(error.message) }`);
     });
   }
 
@@ -103,7 +103,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data sources.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_SOURCES', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_SOURCES') } ${ tr(error.message) }`);
     });
   }
 
@@ -120,7 +120,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the edge gateways.', error);
-      messages.error(tr('FAILED_TO_FETCH_EDGE_GATEWAYS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_EDGE_GATEWAYS') } ${ tr(error.message) }`);
     });
   }
 
@@ -250,7 +250,7 @@ class AnalyticsInstances extends Component {
       // eslint-disable-next-line no-console
       console.error(analyticsInstance.id ? `Failed to update the analytics instance ${ analyticsInstance.id }.` :
         'Failed to create an analytics instance.', error);
-      messages.error(tr('FAILED_TO_SAVE_ANALYTICS_INSTANCE', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_ANALYTICS_INSTANCE') } ${ tr(error.message) }`);
     });
   }
 
@@ -267,7 +267,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to delete the analytics instance ${ analyticsInstance.id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_ANALYTICS_INSTANCE', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_ANALYTICS_INSTANCE') } ${ tr(error.message) }`);
     });
   }
 
@@ -284,7 +284,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to start the analytics instance ${ analyticsInstance.id }.`, error);
-      messages.error(tr('FAILED_TO_START_ANALYTICS_INSTANCE', error.message));
+      messages.error(`${ tr('FAILED_TO_START_ANALYTICS_INSTANCE') } ${ tr(error.message) }`);
     });
   }
 
@@ -301,7 +301,7 @@ class AnalyticsInstances extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to stop the analytics instance ${ analyticsInstance.id }.`, error);
-      messages.error(tr('FAILED_TO_STOP_ANALYTICS_INSTANCE', error.message));
+      messages.error(`${ tr('FAILED_TO_STOP_ANALYTICS_INSTANCE') } ${ tr(error.message) }`);
     });
   }
 

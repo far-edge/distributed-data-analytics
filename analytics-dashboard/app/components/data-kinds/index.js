@@ -46,7 +46,7 @@ class DataKinds extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data kinds.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_KINDS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_KINDS') } ${ tr(error.message) }`);
     });
   }
 
@@ -96,7 +96,7 @@ class DataKinds extends Component {
       // eslint-disable-next-line no-console
       console.error(dataKind.id ? `Failed to update the data kind ${ dataKind.id }.` : 'Failed to create a data kind.',
         error);
-      messages.error(tr('FAILED_TO_SAVE_DATA_KIND', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_DATA_KIND') } ${ tr(error.message) }`);
     });
   }
 
@@ -111,7 +111,7 @@ class DataKinds extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to delete the data kind ${ dataKind.id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_DATA_KIND', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_DATA_KIND') } ${ tr(error.message) }`);
     });
   }
 

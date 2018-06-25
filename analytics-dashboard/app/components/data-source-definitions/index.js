@@ -51,7 +51,7 @@ class DataSourceDefinitions extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data interfaces.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_INTERFACES', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_INTERFACES') } ${ tr(error.message) }`);
     });
   }
 
@@ -68,7 +68,7 @@ class DataSourceDefinitions extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data kinds.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_KINDS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_KINDS') } ${ tr(error.message) }`);
     });
   }
 
@@ -85,7 +85,7 @@ class DataSourceDefinitions extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data source definitions.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_SOURCE_DEFINITIONS', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_SOURCE_DEFINITIONS') } ${ tr(error.message) }`);
     });
   }
 
@@ -143,7 +143,7 @@ class DataSourceDefinitions extends Component {
       console.error(dataSourceDefinition.id ?
         `Failed to update the data source definition ${ dataSourceDefinition.id }.` :
         'Failed to create a data source definition.', error);
-      messages.error(tr('FAILED_TO_SAVE_DATA_SOURCE_DEFINITION', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_DATA_SOURCE_DEFINITION') } ${ tr(error.message) }`);
     });
   }
 
@@ -158,7 +158,7 @@ class DataSourceDefinitions extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to delete the data source definition ${ dataSourceDefinition.id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_DATA_SOURCE_DEFINITION', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_DATA_SOURCE_DEFINITION') } ${ tr(error.message) }`);
     });
   }
 

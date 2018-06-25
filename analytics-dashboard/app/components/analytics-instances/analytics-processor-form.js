@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dropdown, Form, Grid, Icon, Input, Segment, TextArea } from 'semantic-ui-react';
+import { Dropdown, Form, Grid, Input, Segment, TextArea } from 'semantic-ui-react';
 
 import { tr } from 'helpers/languages';
 

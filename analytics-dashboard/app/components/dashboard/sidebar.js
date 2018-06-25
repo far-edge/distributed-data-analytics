@@ -76,6 +76,14 @@ const Sidebar = (props) => {
           { tr('ANALYTICS_INSTANCES') }
         </Link>
       </Menu.Item>
+      <Menu.Item
+        name='data'
+        active={ props.content === 'data' }
+      >
+        <Link to='/dashboard/data'>
+          { tr('DATA') }
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 

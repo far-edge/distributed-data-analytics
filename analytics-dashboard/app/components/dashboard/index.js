@@ -6,6 +6,7 @@ import { Container, Grid, Segment } from 'semantic-ui-react';
 
 import AnalyticsInstances from 'components/analytics-instances';
 import AnalyticsProcessorDefinitions from 'components/analytics-processor-definitions';
+import Data from 'components/data';
 import DataInterfaces from 'components/data-interfaces';
 import DataKinds from 'components/data-kinds';
 import DataSourceDefinitions from 'components/data-source-definitions';
@@ -80,6 +81,10 @@ class Dashboard extends Component {
               <Route
                 path='/dashboard/analytics-instances'
                 render={ (routeProps) => { return ( <AnalyticsInstances { ...routeProps } /> ); } }
+              />
+              <Route
+                path='/dashboard/data'
+                render={ (routeProps) => { return ( <Data { ...routeProps } /> ); } }
               />
             </Segment>
           </Grid.Column>

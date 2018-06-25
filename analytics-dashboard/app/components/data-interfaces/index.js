@@ -47,7 +47,7 @@ class DataInterfaces extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error('Failed to fetch the data interfaces.', error);
-      messages.error(tr('FAILED_TO_FETCH_DATA_INTERFACES', error.message));
+      messages.error(`${ tr('FAILED_TO_FETCH_DATA_INTERFACES') } ${ tr(error.message) }`);
     });
   }
 
@@ -126,7 +126,7 @@ class DataInterfaces extends Component {
       // eslint-disable-next-line no-console
       console.error(dataInterface.id ? `Failed to update the data interface ${ dataInterface.id }.` :
         'Failed to create a data interface.', error);
-      messages.error(tr('FAILED_TO_SAVE_DATA_INTERFACE', error.message));
+      messages.error(`${ tr('FAILED_TO_SAVE_DATA_INTERFACE') } ${ tr(error.message) }`);
     });
   }
 
@@ -141,7 +141,7 @@ class DataInterfaces extends Component {
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error(`Failed to delete the data interface ${ dataInterface.id }.`, error);
-      messages.error(tr('FAILED_TO_DELETE_DATA_INTERFACE', error.message));
+      messages.error(`${ tr('FAILED_TO_DELETE_DATA_INTERFACE') } ${ tr(error.message) }`);
     });
   }
 

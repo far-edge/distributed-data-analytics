@@ -24,9 +24,15 @@ const AnalyticsInstanceTable = (props) => {
   }, {
     id: 'edge-gateway',
     Header: tr('EDGE_GATEWAY'),
-    accessor: (analyticsInstance) => {
+    Cell: (row) => {
+      const analyticsInstance = row.original;
       const id = analyticsInstance.edgeGatewayReferenceID;
-      return id ? first(props.edgeGateways.filter((eg) => { return eg.id === id; })).name : '';
+      const edgeGateway = id ? first(props.edgeGateways.filter((eg) => { return eg.id === id; })) : null;
+      return id ? (
+        <span>{ edgeGateway? edgeGateway.name : '' }</span>
+      ) : (
+        <Icon name='cloud' />
+      );
     },
     className: 'c-edge-gateway',
     headerClassName: 'h-edge-gateway'
