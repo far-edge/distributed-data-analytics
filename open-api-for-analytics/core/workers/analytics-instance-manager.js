@@ -36,8 +36,7 @@ const _findDataSource = (id) => {
 // Starts the analytics processor with the given manifest that is part of tha analytics instance
 // with the given AIID.
 const _startAnalyticsProcessor = (aiid, analyticsProcessorManifest) => {
-  const id = analyticsProcessorManifest._id;
-  logger.debug(`Start analytics processor ${ id }.`);
+  logger.debug(`Start analytics processor ${ analyticsProcessorManifest._id }.`);
   const dataSourceIds = analyticsProcessorManifest.dataSources.dataSource.map((ds) => {
     return ds.dataSourceManifestReferenceID;
   });
@@ -79,7 +78,7 @@ const _startAnalyticsProcessor = (aiid, analyticsProcessorManifest) => {
     // Put together the system properties.
     let properties = '';
     // Put the analytics processor ID to the system property faredge.processor.id.
-    properties = `${ properties } -Dfaredge.processor.id=${ id }`;
+    properties = `${ properties } -Dfaredge.processor.id=${ analyticsProcessorManifest._id }`;
     // Put the data sink ID to the system property faredge.sink.id.
     properties = `${ properties } -Dfaredge.sink.id=${ dataSinkId }`;
     // Put the the value for a parameter x that is passed to one of the data sources of the
@@ -111,24 +110,24 @@ const _startAnalyticsProcessor = (aiid, analyticsProcessorManifest) => {
     }
     // Run the analytics processor.
     const command = `java -jar ${ properties } ${ analyticsProcessorDefinition.processorLocation }`;
-    logger.debug(`Start analytics processor ${ id } with the command ${ command }.`);
+    logger.debug(`Start analytics processor ${ analyticsProcessorManifest._id } with the command ${ command }.`);
     const p = exec(command).then(() => {
-      logger.debug(`Analytics processor ${ id } stopped.`);
+      logger.debug(`Analytics processor ${ analyticsProcessorManifest._id } stopped.`);
       // The processor stopped.
-      _ait[aiid].processors[id].state = State.STOPPED;
+      _ait[aiid].processors[analyticsProcessorManifest._id].state = State.STOPPED;
       _ait[aiid].state = _ait[aiid].processors.some((p) => { return p.state === State.FAILED; }) ?
         State.FAILED : State.STOPPED;
     }).catch((error) => {
-      logger.error(`Something went wrong with analytics processor ${ id }.`, error);
-      _ait[aiid].processors[id].state = State.FAILED;
+      logger.error(`Something went wrong with analytics processor ${ analyticsProcessorManifest._id }.`, error);
+      _ait[aiid].processors[analyticsProcessorManifest._id].state = State.FAILED;
       _ait[aiid].state = State.FAILED;
     });
-    _ait[aiid].processors[id].process = p.childProcess;
-    _ait[aiid].processors[id].state = State.RUNNING;
-    logger.debug(`Started analytics processor ${ id }.`);
+    _ait[aiid].processors[analyticsProcessorManifest._id].process = p.childProcess;
+    _ait[aiid].processors[analyticsProcessorManifest._id].state = State.RUNNING;
+    logger.debug(`Started analytics processor ${ analyticsProcessorManifest._id }.`);
     return { process: p.childProcess, state: State.RUNNING };
   }).catch((error) => {
-    logger.error(`Failed to start analytics processor ${ id }.`, error);
+    logger.error(`Failed to start analytics processor ${ analyticsProcessorManifest._id }.`, error);
     throw error;
   });
 };
@@ -138,7 +137,7 @@ const createAnalyticsInstance = (aiid) => {
   logger.debug(`Create analytics instance ${ aiid }.`);
   return Promise.try(() => {
     // Create the AICB for the analytics instance with the given AIID.
-    const aicb = { processors: [], state: State.STOPPED };
+    const aicb = { processors: {}, state: State.STOPPED };
     // Put it into the AIT.
     _ait[aiid] = aicb;
     logger.debug(`Created analytics instance ${ aiid }.`);
@@ -205,7 +204,7 @@ const init = () => {
     // Create an AICB for each one of them.
     return Promise.each(analyticsManifests, (am) => {
       logger.debug(`Re-create analytics instance ${ am._id }.`);
-      _ait[am._id] = { processors: [], state: State.STOPPED };
+      _ait[am._id] = { processors: {}, state: State.STOPPED };
     });
   }).then(() => {
     logger.info('Re-created all analytics instances.');
@@ -237,9 +236,9 @@ const startAnalyticsInstance = (aiid) => {
       logger.error(`Analytics instance ${ aiid } is running.`);
       throw new errors.BadRequestError('ANALYTICS_INSTANCE_RUNNING');
     }
-    aicb.processors = analyticsManifest.analyticsProcessors.apm.map((apm) => {
-      return { apid: apm._id, process: null, state: State.STOPPED };
-    });
+    aicb.processors = analyticsManifest.analyticsProcessors.apm.reduce((acc, apm) => {
+      return { ...acc, [ apm._id ]: { process: null, state: State.STOPPED } };
+    }, {});
     aicb.state = State.STOPPED;
     // Start all analytics processors.
     return Promise.each(analyticsManifest.analyticsProcessors.apm, (apm) => {
@@ -259,7 +258,9 @@ const startAnalyticsInstance = (aiid) => {
     });
   }).then(() => {
     // All analytics processors have started.
-    if (aicb.processors.every((p) => { return p.state === State.RUNNING; })) {
+    if (Object.keys(aicb.processors).every((id) => {
+      return aicb.processors[id].state === State.RUNNING;
+    })) {
       aicb.state = State.RUNNING;
       logger.debug(`Started analytics instance ${ aiid }.`);
       return null;
@@ -267,15 +268,16 @@ const startAnalyticsInstance = (aiid) => {
     // Some of the analytics processors failed to start.
     logger.error(`Failed to start some analytics processors for analytics instance ${ aiid }`);
     // Stop the ones that started.
-    return Promise.map(aicb.processors.filter((p) => {
-      return p.state === State.RUNNING;
-    }), (p) => {
-      p.process.kill();
+    return Promise.map(Object.keys(aicb.processors).filter((id) => {
+      return aicb.processors[id].state === State.RUNNING;
+    }), (id) => {
+      aicb.processors[id].process.kill();
       return null;
     }).then(() => {
-      aicb.processors = [];
-      aicb.state = aicb.processors.some((p) => { return p.state === State.FAILED; }) ?
-        State.FAILED : State.STOPPED;
+      aicb.state = Object.keys(aicb.processors).some((id) => {
+        return aicb.processors[id].state === State.FAILED;
+      }) ? State.FAILED : State.STOPPED;
+      aicb.processors = {};
       throw new Error(`Failed to start analytics instance ${ aiid }.`);
     });
   }).catch((error) => {
@@ -302,9 +304,9 @@ const stopAnalyticsInstance = (aiid) => {
     }
     // Stop all processors.
     // NOTE: Do your best.
-    return Promise.each(aicb.processors, (p) => {
+    return Promise.each(Object.keys(aicb.processors), (id) => {
       return Promise.try(() => {
-        p.process.kill();
+        aicb.processors[id].process.kill();
         return null;
       }).catch((error) => {
         logger.error(`Failed to stop analytics processor with PID ${ process.pid }.`, error);
@@ -331,8 +333,8 @@ const shutDown = () => {
       return;
     }
     logger.debug(`Stop analytics instance ${ aiid }.`);
-    aicb.processors.forEach((p) => {
-      p.process.kill();
+    Object.keys(aicb.processors).forEach((id) => {
+      aicb.processors[id].process.kill();
     });
   });
   logger.info('Stopped all running analytics instances.');
