@@ -10,6 +10,7 @@
 @import url('./analytics-processor-definitions/analytics-processor-definition-form.css');
 @import url('./dashboard/index.css');
 @import url('./dashboard/sidebar.css');
+@import url('./data/index.css');
 @import url('./data-interfaces/index.css');
 @import url('./data-interfaces/data-interface-table.css');
 @import url('./data-interfaces/data-interface-form.css');

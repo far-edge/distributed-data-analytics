@@ -6,3 +6,12 @@
 
 **ADDED**
 
+* Overview.
+* Manage edge gateways (create, update, delete, list).
+* Manage data kinds (create, update, delete, list).
+* Manage data interfaces (create, update, delete, list).
+* Manage data source definitions (create, update, delete, list).
+* Manage analytics processor definitions (create, update, delete, list).
+* Manage data sources (create, delete, list).
+* Manage analytics instances (create, update, delete, list, start, stop).
+* Inspect data.

@@ -23,6 +23,10 @@ i.icon {
   font-size: 0.9em;
 }
 
+.ui.form {
+  font-size: 0.9rem;
+}
+
 .ui.form .field > label,
 .ui.form .inline.field > :first-child,
 .ui.form .inline.fields .field > :first-child {
@@ -31,7 +35,6 @@ i.icon {
 
 .ui.multiple.dropdown > .label {
   font-weight: 400;
-  font-size: 0.9em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
@@ -40,4 +43,8 @@ i.icon {
 .ui.statistics .statistic > .value ~ .label {
   text-transform: none;
   color: var(--blue);
+}
+
+.ui.dropdown .menu > .item {
+  font-size: 0.9rem;
 }

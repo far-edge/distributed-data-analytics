@@ -1,17 +1,27 @@
-.dashboard .ui.vertical.menu.side {
+.dashboard .ui.container.side {
   margin: 0;
   height: 100%;
   min-height: 100%;
   width: 100%;
   background-color: var(--white);
   border-radius: 0;
+  border-right: 1px solid var(--gray);
 }
 
-.dashboard .ui.vertical.menu.side .item a {
+.dashboard .ui.container.side .ui.vertical.menu {
+  margin: 0;
+  width: 100%;
+  background-color: var(--white);
+  border-radius: 0;
+  box-shadow: none;
+  border-right: none;
+}
+
+.dashboard .ui.container.side .ui.vertical.menu .item a {
   color: var(--gray);
 }
 
-.dashboard .ui.vertical.menu.side .item.active a {
+.dashboard .ui.container.side .ui.vertical.menu .item.active a {
   color: var(--blue);
 }
 
