@@ -134,6 +134,13 @@ class AnalyticsInstances extends Component {
             name: '',
             description: '',
             analyticsProcessorDefinitionReferenceID: '',
+            dataSink: {
+              dataSourceManifestReferenceID: ''
+            },
+            dataSources: {
+              dataSource: [
+              ]
+            },
             parameters: {
               parameter: [ ]
             }
@@ -226,9 +233,9 @@ class AnalyticsInstances extends Component {
       ...analyticsInstance
     };
     analyticsInstance.analyticsProcessors.apm.forEach((apm) => {
-      const filled = apm.parameters.parameter.filter((p) => {
+      const filled = apm.parameters && apm.parameters.parameter ? apm.parameters.parameter.filter((p) => {
         return !!p.value;
-      });
+      }) : [];
       if (filled.length) {
         apm.parameters.parameter = filled;
       } else {
