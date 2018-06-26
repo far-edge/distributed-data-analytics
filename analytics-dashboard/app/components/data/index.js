@@ -21,7 +21,7 @@ class Data extends Component {
       data: [ ],
       componentWidth: 300
     };
-    this.INTERVAL = 5000;
+    this.INTERVAL = 15000;
     this.NUMBER_OF_VALUES = 30;
     autoBind(this);
     this.fetchData = this.fetchData.bind(this);
@@ -77,7 +77,7 @@ class Data extends Component {
     }
     const dataSource = first(this.props.dataSources.filter((ds) => { return ds.id === id; }));
     const noDataSourceBefore = dataSource && !this.state.dataSource;
-    this.setState({ dataSource }, () => {
+    this.setState({ dataSource, data: [] }, () => {
       if (noDataSourceBefore) {
         this.timer = setInterval(this.fetchData, this.INTERVAL);
         this.handleResize();
