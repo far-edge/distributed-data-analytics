@@ -3,6 +3,7 @@ const logger = require('./core/common/loggers').get('SERVER');
 const mongoose = require('mongoose');
 const util = require('util');
 
+const AIM = require('./core/workers/analytics-instance-manager');
 const app = require('./app');
 const blueprint = require('./blueprints/env');
 const validations = require('./core/common/validations');
@@ -37,6 +38,8 @@ mongoose.connect(uri, {
   poolSize: process.env.MONGODB_POOL_SIZE
 }).then(() => {
   logger.info(`System connected to the database @ ${ uriwa }.`);
+  // Initialise AIM.
+  return AIM.init();
 }).catch((error) => {
   logger.error(`System failed to connect to the database @ ${ uriwa }.`, error);
 });
