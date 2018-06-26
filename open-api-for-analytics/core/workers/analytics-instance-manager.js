@@ -27,8 +27,8 @@ const _findDataSource = (id) => {
       return dataSourceManifest;
     }
     // Look for it in any local scope.
-    return dataSources.discoverDataSources({ id }).then((dataSourceManifests) => {
-      return first(dataSourceManifests);
+    return dataSources.discoverDataSources({ id }).then(({ dataSources }) => {
+      return first(dataSources);
     });
   });
 };

@@ -189,4 +189,7 @@ router.route('/:id').delete(validate(blueprint.unregisterDataSource),
 router.route('/discover').post(validate(blueprint.discoverDataSources),
   lift(method.discoverDataSources), respond);
 
+router.route('/:id/data').get(validate(blueprint.getDataFromDataSource),
+  lift(method.getDataFromDataSource), respond);
+
 module.exports = router;

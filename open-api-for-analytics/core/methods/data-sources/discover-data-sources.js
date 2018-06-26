@@ -52,7 +52,7 @@ const _discoverLocalDataSources = (input) => {
         method: 'POST',
         uri: `${ edgeGateway.dataRouterAndPreprocessorBaseURL }/data-sources/discover`,
         body: {
-          ...(input.id ? { _id: input.id } : { }),
+          ...(input.id ? { id: input.id } : { }),
           ...(input.name ? { name: input.name } : { }),
           ...(input.dataSourceDefinitionReferenceID ? {
             dataSourceDefinitionReferenceID: input.dataSourceDefinitionReferenceID

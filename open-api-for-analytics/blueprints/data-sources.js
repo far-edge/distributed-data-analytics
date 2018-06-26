@@ -17,6 +17,16 @@ const discoverDataSources = {
   }
 };
 
+// How to get data from a data source.
+const getDataFromDataSource = {
+  params: {
+    id: validations.id().required()
+  },
+  query: {
+    edgeGatewayReferenceID: validations.id().allow('').allow(null).optional()
+  }
+};
+
 // How to register a data source.
 const registerDataSource = {
   query: {
@@ -45,6 +55,7 @@ const unregisterDataSource = {
 
 module.exports = {
   discoverDataSources,
+  getDataFromDataSource,
   registerDataSource,
   unregisterDataSource
 };
