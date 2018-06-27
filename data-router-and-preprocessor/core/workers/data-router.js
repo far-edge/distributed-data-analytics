@@ -170,6 +170,8 @@ const _setUpDataRoute = (dataRoute) => {
   const host = first(parameters.filter((p) => { return p.key === 'host'; })).value;
   const topic = first(parameters.filter((p) => { return p.key === 'topic'; })).value;
   const port = first(parameters.filter((p) => { return p.key === 'port'; })).value;
+  const username = first(parameters.filter((p) => { return p.key === 'username'; })).value;
+  const password = first(parameters.filter((p) => { return p.key === 'password'; })).value;
   const url = `${ protocol }://${ host }:${ port }`;
   return Promise.try(() => {
     // Cache information about the data route.
@@ -190,7 +192,10 @@ const _setUpDataRoute = (dataRoute) => {
     }
     logger.debug(`Connect to ${ url }.`);
     return new Promise((resolve, reject) => {
-      const client = mqtt.connect(url);
+      const client = mqtt.connect(url, {
+        ...(username ? { username } : { }),
+        ...(password ? { password } : { })
+      });
       client.on('connect', () => {
         resolve(client);
       });
