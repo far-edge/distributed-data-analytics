@@ -45,7 +45,8 @@ const getDataFromDataSource = (input) => {
     return exec(command).then((result) => {
       return result.stdout.split(':')[2];
     }).then((offset) => {
-      command = `kafka-console-consumer --bootstrap-server ${ host }:${ port } --topic ${ topic } --offset ${ offset - N } --partition 0 --timeout-ms 100 | grep -v ERROR | grep -v kafka.consumer.ConsumerTimeoutException`;
+      const o = isNaN(offset - N) ? 0 : offset - N;
+      command = `kafka-console-consumer --bootstrap-server ${ host }:${ port } --topic ${ topic } --offset ${ o } --partition 0 --timeout-ms 100 | grep -v ERROR | grep -v kafka.consumer.ConsumerTimeoutException`;
       return exec(command).then((result) => {
         return result.stdout.split('\n').filter((d) => { return !!d; }).map((d) => {
           const dataSet = JSON.parse(d);
@@ -59,7 +60,7 @@ const getDataFromDataSource = (input) => {
     return { data };
   }).catch((error) => {
     logger.error(`Failed to get data from data source ${ input.id }.`, error);
-    throw error;
+    return { data: [] };
   });
 };
 
