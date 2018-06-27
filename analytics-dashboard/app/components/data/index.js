@@ -166,7 +166,6 @@ class Data extends Component {
                 xType='time'
                 width={ this.state.componentWidth }
                 height={ 400 }
-                interpolate='cardinal'
                 yDomainRange={ [ min - 2, max + 2 ] }
                 axes
                 grid
