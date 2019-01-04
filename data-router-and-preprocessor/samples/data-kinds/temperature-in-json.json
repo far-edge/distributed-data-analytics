@@ -1,7 +1,0 @@
-{
-  "id": "b77108b7-a8c2-40e1-b794-d3a21239487a",
-  "name": "Temperature (in Celsius) in JSON",
-  "description": "Temperature values (in Celsius) in JSON format.",
-  "format": "JSON",
-  "quantityKind": "Temperature"
-}
